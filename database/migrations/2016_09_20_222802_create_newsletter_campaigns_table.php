@@ -13,7 +13,14 @@ class CreateNewsletterCampaignsTable extends Migration
     public function up()
     {
         Schema::create('newsletter_campaigns', function (Blueprint $table) {
-            //
+            $table->increments('id');
+            $table->unsignedInteger('newsletter_id')->index();
+            $table->string('name');
+            $table->string('slug');
+            $table->timestamp('send_at')->nullable();
+            $table->boolean('sent')->default(false);
+            $table->timestamp('sent_at')->nullable();
+            $table->timestamps();
         });
     }
 

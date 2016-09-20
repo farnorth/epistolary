@@ -19,6 +19,11 @@
         "symfony/dom-crawler": "3.1.*",
         "tightenco/mailthief": "^0.3.1"
     },
+    "autoload": {
+        "psr-4": {
+            "Pilaster\\Newsletters\\": "src/"
+        }
+    },
     "minimum-stability": "RC",
     "prefer-stable": true
 }
