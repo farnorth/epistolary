@@ -3,9 +3,9 @@
 namespace Pilaster\Newsletters\Controllers;
 
 use Illuminate\Http\Request;
-use Pilaster\Newsletters\Newsletter;
+use Pilaster\Newsletters\List;
 
-class NewslettersController extends Controller
+class ListsController extends Controller
 {
     /**
      * Display a listing of newsletters.
@@ -14,52 +14,52 @@ class NewslettersController extends Controller
      */
     public function index()
     {
-        $newsletters = Newsletter::all();
+        $lists = List::all();
 
-        return view('newsletters::newsletters.index', compact('newsletters'));
+        return view('newsletters::lists.index', compact('newsletters'));
     }
 
     /**
      * Show a single newsletter.
      *
-     * @param int|string $newsletter_id
+     * @param int|string $list_id
      * @return \Illuminate\View\View
      */
-    public function show($newsletter_id)
+    public function show($list_id)
     {
-        $newsletter = $this->getNewsletter($newsletter_id);
+        $list = $this->getList($list_id);
 
-        return view('newsletters::newsletters.show', compact('newsletter'));
+        return view('newsletters::lists.show', compact('newsletter'));
     }
 
     /**
      * Show the form to edit a newsletter.
      *
-     * @param int|string $newsletter_id
+     * @param int|string $list_id
      * @return \Illuminate\View\View
      */
-    public function edit($newsletter_id)
+    public function edit($list_id)
     {
-        $newsletter = $this->getNewsletter($newsletter_id);
+        $list = $this->getList($list_id);
 
-        return view('newsletters::newsletters.edit', compact('newsletter'));
+        return view('newsletters::lists.edit', compact('newsletter'));
     }
 
     /**
      * Update a newsletter.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int|string $newsletter_id
+     * @param int|string $list_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $newsletter_id)
+    public function update(Request $request, $list_id)
     {
-        $newsletter = $this->getNewsletter($newsletter_id);
-        $newsletter->update($this->newsletterAttributesFrom($request));
+        $list = $this->getList($list_id);
+        $list->update($this->newsletterAttributesFrom($request));
 
-        session()->flash('success', sprintf('Updated newsletter %s', $newsletter->name));
+        session()->flash('success', sprintf('Updated newsletter %s', $list->name));
 
-        return redirect()->route('newsletters.index');
+        return redirect()->route('newsletters::lists.index');
     }
 
     /**
@@ -69,7 +69,7 @@ class NewslettersController extends Controller
      */
     public function create()
     {
-        return view('newsletters::newsletters.create');
+        return view('newsletters::lists.create');
     }
 
     /**
@@ -80,43 +80,43 @@ class NewslettersController extends Controller
      */
     public function store(Request $request)
     {
-        $newsletter = new Newsletter($this->newsletterAttributesFrom($request));
-        $newsletter->save();
+        $list = new List($this->newsletterAttributesFrom($request));
+        $list->save();
 
-        session()->flash('success', sprintf('Created newsletter %s', $newsletter->name));
+        session()->flash('success', sprintf('Created newsletter %s', $list->name));
 
-        return redirect()->route('newsletters.index');
+        return redirect()->route('newsletters::lists.index');
     }
 
     /**
      * Delete a newsletter.
      *
-     * @param int|string $newsletter_id
+     * @param int|string $list_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($newsletter_id)
+    public function destroy($list_id)
     {
-        $newsletter = $this->getNewsletter($newsletter_id);
-        $newsletter->delete();
+        $list = $this->getList($list_id);
+        $list->delete();
 
-        session()->flash('success', sprintf('Deleted newsletter %s', $newsletter->name));
+        session()->flash('success', sprintf('Deleted newsletter %s', $list->name));
 
-        return redirect()->route('newsletters.index');
+        return redirect()->route('newsletters::lists.index');
     }
 
     /**
      * Get a newsletter by its ID or slug.
      *
-     * @param int|string $newsletter
-     * @return \Pilaster\Newsletters\Newsletter
+     * @param int|string $list
+     * @return \Pilaster\Newsletters\List
      */
-    private function getNewsletter($newsletter)
+    private function getList($list)
     {
-        if (is_numeric($newsletter)) {
-            return Newsletter::find($newsletter);
+        if (is_numeric($list)) {
+            return List::find($list);
         }
 
-        return Newsletter::getBySlug($newsletter);
+        return List::getBySlug($list);
     }
 
     /**

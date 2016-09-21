@@ -57,9 +57,9 @@ class CampaignsController extends Controller
         $campaign = $this->getCampaign($campaign_id);
         $campaign->update($this->newsletterAttributesFrom($request));
 
-        session()->flash('success', sprintf('Updated newsletter %s', $campaign->name));
+        session()->flash('success', sprintf('Updated campaign %s', $campaign->name));
 
-        return redirect()->route('newsletters.index');
+        return redirect()->route('newsletters::campaigns.index');
     }
 
     /**
@@ -83,9 +83,9 @@ class CampaignsController extends Controller
         $campaign = new Campaign($this->newsletterAttributesFrom($request));
         $campaign->save();
 
-        session()->flash('success', sprintf('Created newsletter %s', $campaign->name));
+        session()->flash('success', sprintf('Created campaign %s', $campaign->name));
 
-        return redirect()->route('newsletters.index');
+        return redirect()->route('newsletters::campaigns.index');
     }
 
     /**
@@ -99,9 +99,9 @@ class CampaignsController extends Controller
         $campaign = $this->getCampaign($campaign_id);
         $campaign->delete();
 
-        session()->flash('success', sprintf('Deleted newsletter %s', $campaign->name));
+        session()->flash('success', sprintf('Deleted campaign %s', $campaign->name));
 
-        return redirect()->route('newsletters.index');
+        return redirect()->route('newsletters::campaigns.index');
     }
 
     /**
@@ -129,9 +129,7 @@ class CampaignsController extends Controller
     {
         return [
             'name' => $request->input('name'),
-            'slug' => str_slug($request->input('name')),
             'description' => $request->input('description'),
-            'requires_opt_in' => $request->input('requires_opt_in', true),
         ];
     }
 }

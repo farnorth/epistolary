@@ -3,17 +3,14 @@
 /** @var Router $router */
 use Illuminate\Routing\Router;
 
-// Dashboard
-$router->get('newsletters/dashboard', [
+
+$router->get('dashboard', [
     'uses' => 'DashboardController@index',
     'as' => 'dashboard',
 ]);
 
-// Newsletters and sub-resources
-$router->resource('newsletters', 'NewslettersController');
-$router->resource('newsletters.campaigns', 'CampaignsController');
-// $router->resource('newsletters.subscriptions', 'NewsletterSubscriptionsController');
-
-// Subscribers
-// $router->resource('newsletters/subscribers', 'SubscribersController');
-// $router->resource('newsletters/subscribers.subscriptions', 'SubscriberSubscriptionsController');
+$router->resource('lists', 'ListsController');
+// $router->resource('lists.subscriptions', 'ListSubscriptionsController');
+$router->resource('campaigns', 'CampaignsController');
+// $router->resource('subscribers', 'SubscribersController');
+// $router->resource('subscribers.subscriptions', 'SubscriberSubscriptionsController');
