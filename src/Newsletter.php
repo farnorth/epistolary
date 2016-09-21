@@ -20,6 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Newsletter extends Model
 {
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'requires_opt_in' => 'boolean',
     ];

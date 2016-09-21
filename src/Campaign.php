@@ -16,5 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Campaign extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'newsletter_campaigns';
 }
