@@ -128,6 +128,7 @@ class CampaignsController extends Controller
     private function newsletterAttributesFrom(Request $request)
     {
         return [
+            'list_id' => $request->input('list_id'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ];

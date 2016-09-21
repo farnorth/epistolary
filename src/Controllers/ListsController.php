@@ -3,7 +3,7 @@
 namespace Pilaster\Newsletters\Controllers;
 
 use Illuminate\Http\Request;
-use Pilaster\Newsletters\List;
+use Pilaster\Newsletters\MailingList;
 
 class ListsController extends Controller
 {
@@ -14,9 +14,9 @@ class ListsController extends Controller
      */
     public function index()
     {
-        $lists = List::all();
+        $lists = MailingList::all();
 
-        return view('newsletters::lists.index', compact('newsletters'));
+        return view('newsletters::lists.index', compact('lists'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ListsController extends Controller
     {
         $list = $this->getList($list_id);
 
-        return view('newsletters::lists.show', compact('newsletter'));
+        return view('newsletters::lists.show', compact('list'));
     }
 
     /**
@@ -42,7 +42,7 @@ class ListsController extends Controller
     {
         $list = $this->getList($list_id);
 
-        return view('newsletters::lists.edit', compact('newsletter'));
+        return view('newsletters::lists.edit', compact('list'));
     }
 
     /**
@@ -55,9 +55,9 @@ class ListsController extends Controller
     public function update(Request $request, $list_id)
     {
         $list = $this->getList($list_id);
-        $list->update($this->newsletterAttributesFrom($request));
+        $list->update($this->listAttributesFrom($request));
 
-        session()->flash('success', sprintf('Updated newsletter %s', $list->name));
+        session()->flash('success', sprintf('Updated list %s', $list->name));
 
         return redirect()->route('newsletters::lists.index');
     }
@@ -80,10 +80,10 @@ class ListsController extends Controller
      */
     public function store(Request $request)
     {
-        $list = new List($this->newsletterAttributesFrom($request));
+        $list = new MailingList($this->listAttributesFrom($request));
         $list->save();
 
-        session()->flash('success', sprintf('Created newsletter %s', $list->name));
+        session()->flash('success', sprintf('Created list %s', $list->name));
 
         return redirect()->route('newsletters::lists.index');
     }
@@ -108,15 +108,15 @@ class ListsController extends Controller
      * Get a newsletter by its ID or slug.
      *
      * @param int|string $list
-     * @return \Pilaster\Newsletters\List
+     * @return \Pilaster\Newsletters\MailingList
      */
     private function getList($list)
     {
         if (is_numeric($list)) {
-            return List::find($list);
+            return MailingList::find($list);
         }
 
-        return List::getBySlug($list);
+        return MailingList::getBySlug($list);
     }
 
     /**
@@ -125,7 +125,7 @@ class ListsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return array
      */
-    private function newsletterAttributesFrom(Request $request)
+    private function listAttributesFrom(Request $request)
     {
         return [
             'name' => $request->input('name'),

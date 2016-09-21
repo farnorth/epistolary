@@ -14,7 +14,7 @@ class CreateNewsletterSubscriptionsTable extends Migration
     {
         Schema::create('newsletter_subscriptions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedInteger('newsletter_id')->index();
+            $table->unsignedInteger('list_id')->index();
             $table->unsignedInteger('subscriber_id')->index();
             $table->boolean('opted_in')->default(false);
             $table->timestamp('opted_in_at')->nullable();

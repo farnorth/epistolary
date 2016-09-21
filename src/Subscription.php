@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Subscription
  *
  * @property string $id
- * @property int $newsletter_id
+ * @property int $list_id
  * @property int $subscriber_id
  * @property string $description
  * @property boolean $opted_in
@@ -58,7 +58,7 @@ class Subscription extends Model
      * @var array
      */
     protected $casts = [
-        'newsletter_id' => 'integer',
+        'list_id' => 'integer',
         'subscriber_id' => 'integer',
         'opted_in' => 'boolean',
     ];

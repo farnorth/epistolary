@@ -18,14 +18,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
-class Newsletter extends Model
+class MailingList extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'newsletters';
+    protected $table = 'newsletter_lists';
 
     /**
      * The attributes that are not mass assignable.

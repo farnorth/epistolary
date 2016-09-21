@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Campaign
  *
  * @property int $id
- * @property int $newsletter_id
+ * @property int $list_id
  * @property string $name
  * @property string $description
  * @property boolean $sent
@@ -46,7 +46,7 @@ class Campaign extends Model
      * @var array
      */
     protected $casts = [
-        'newsletter_id' => 'integer',
+        'list_id' => 'integer',
         'sent' => 'boolean',
     ];
 }

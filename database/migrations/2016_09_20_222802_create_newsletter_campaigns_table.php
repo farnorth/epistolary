@@ -14,7 +14,7 @@ class CreateNewsletterCampaignsTable extends Migration
     {
         Schema::create('newsletter_campaigns', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('newsletter_id')->index();
+            $table->unsignedInteger('list_id')->index();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamp('send_at')->nullable();
