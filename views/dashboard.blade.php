@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('newsletters::layout')
 
 @section('content')
   <h1>Dashboard</h1>
