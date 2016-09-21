@@ -68,7 +68,7 @@ class Subscription extends Model
      */
     public function newsletter()
     {
-        return $this->belongsTo(Newsletter::class);
+        return $this->belongsTo(MailingList::class, 'list_id');
     }
 
     /**

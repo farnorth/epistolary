@@ -59,7 +59,7 @@ class MailingList extends Model
      */
     public function campaigns()
     {
-        return $this->hasMany(Campaign::class);
+        return $this->hasMany(Campaign::class, 'list_id');
     }
 
     /**
@@ -67,7 +67,7 @@ class MailingList extends Model
      */
     public function subscriptions()
     {
-        return $this->hasMany(Subscription::class);
+        return $this->hasMany(Subscription::class, 'list_id');
     }
 
     /**

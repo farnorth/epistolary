@@ -45,7 +45,7 @@ class Subscriber extends Model
      */
     public function newsletters()
     {
-        return $this->belongsToMany(Newsletter::class, 'newsletter_subscriptions')
+        return $this->belongsToMany(MailingList::class, 'newsletter_subscriptions', 'list_id')
             ->withPivot(['unsubscribed', 'unsubscribed_at', 'unsubscribed_by'])
             ->withTimestamps();
     }
