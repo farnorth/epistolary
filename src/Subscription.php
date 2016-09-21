@@ -50,15 +50,4 @@ class Subscription extends Model
     {
         return $this->belongsTo(Subscriber::class);
     }
-
-    /**
-     * Scope a query to only include popular users.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeCurrent($query)
-    {
-        return $query->where('unsubscribed', false);
-    }
 }
