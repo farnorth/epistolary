@@ -33,7 +33,7 @@ and then add this to `config/app.php`:
 Pilaster\Newsletters\Providers\NewsletterServiceProvider::class,
 ```
 
-### Setup
+### Optional Additional Setup
 
 To publish all of the file groups (assets/views/migrations/etc.) do:
 
