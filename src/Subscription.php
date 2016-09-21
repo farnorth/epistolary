@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Subscription
  *
- * @property int $id
+ * @property string $id
  * @property int $newsletter_id
  * @property int $subscriber_id
  * @property string $description
