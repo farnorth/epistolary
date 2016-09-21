@@ -5,26 +5,10 @@ Manage your newsletters and subscribers in an existing Laravel application
 
 ### Installation
 
-Add this to `composer.json`:
-
-```json
-{
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:PilasterDigital/newsletters.git"
-        }
-    ],
-    "require": {
-        "pilaster/newsletters": "dev-master@dev"
-    }
-}
-```
-
-and then do,
+Composer
 
 ```bash
-composer update pilaster/newsletters
+composer require pilaster/newsletters
 ```
 
 and then add this to `config/app.php`:
