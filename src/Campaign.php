@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $newsletter_id
  * @property string $name
- * @property string $slug
  * @property string $description
  * @property boolean $sent
  * @property \Carbon\Carbon $sent_at
