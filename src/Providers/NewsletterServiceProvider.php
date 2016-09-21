@@ -54,8 +54,6 @@ class NewsletterServiceProvider extends ServiceProvider
     private function mapWebRoutes()
     {
         Route::group([
-            'as' => 'newsletters::',
-            'prefix' => 'newsletters',
             'namespace' => 'Pilaster\Newsletters\Controllers',
             'middleware' => ['web'],
         ], function ($router) {
@@ -69,8 +67,6 @@ class NewsletterServiceProvider extends ServiceProvider
     private function mapApiRoutes()
     {
         Route::group([
-            'as' => 'newsletters.api::',
-            'prefix' => 'newsletters/api',
             'namespace' => 'Pilaster\Newsletters\Controllers\Api',
             'middleware' => ['auth', 'api'],
         ], function ($router) {

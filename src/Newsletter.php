@@ -30,6 +30,17 @@ class Newsletter extends Model
     ];
 
     /**
+     * Get a newsletter by its slug.
+     *
+     * @param string $newsletter_slug
+     * @return Newsletter
+     */
+    public static function getBySlug($newsletter_slug)
+    {
+        return static::where('slug', $newsletter_slug)->first();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function campaigns()
