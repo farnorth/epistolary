@@ -26,6 +26,13 @@ class Subscriber extends Model
     protected $table = 'newsletter_subscribers';
 
     /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id', 'updated_at', 'created_at'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function subscriptions()

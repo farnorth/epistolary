@@ -27,6 +27,13 @@ class Campaign extends Model
     protected $table = 'newsletter_campaigns';
 
     /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id', 'updated_at', 'created_at'];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

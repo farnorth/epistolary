@@ -21,6 +21,20 @@ use Illuminate\Database\Eloquent\Model;
 class Newsletter extends Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'newsletters';
+
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id', 'updated_at', 'created_at'];
+
+    /**
      * The attributes that should be casted to native types.
      *
      * @var array
@@ -69,7 +83,7 @@ class Newsletter extends Model
      * excludes unsubscribed members (obviously), and if required,
      * members who have not opted in.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getCurrentSubscribers()
     {
