@@ -8,7 +8,7 @@
   <table class="table table-striped">
     @foreach ($list->campaigns as $campaign)
       <tr>
-        <td><a href="{{ route('newsletters::campaigns.show', [$list->slug, $campaign->id]) }}">{{ $campaign->name }}</a></td>
+        <td><a href="{{ route('newsletters::campaigns.show', [$campaign->id]) }}">{{ $campaign->name }}</a></td>
       </tr>
     @endforeach
   </table>
