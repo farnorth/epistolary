@@ -16,6 +16,8 @@ class CreateNewsletterSubscriptionsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('newsletter_id')->index();
             $table->unsignedInteger('subscriber_id')->index();
+            $table->boolean('opted_in')->default(false);
+            $table->timestamp('opted_in_at')->nullable();
             $table->boolean('unsubscribed')->default(false);
             $table->timestamp('unsubscribed_at')->nullable();
             $table->unsignedInteger('unsubscribed_by')->nullable();

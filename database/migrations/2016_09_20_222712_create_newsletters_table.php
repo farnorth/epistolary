@@ -18,6 +18,7 @@ class CreateNewslettersTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->boolean('requires_opt_in')->default(true);
             $table->timestamps();
         });
     }
