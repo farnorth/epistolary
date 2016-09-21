@@ -3,6 +3,7 @@
 namespace Pilaster\Newsletters;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Subscription
@@ -13,17 +14,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property boolean $opted_in
  * @property \Carbon\Carbon $opted_in_at
- * @property boolean $unsubscribed
- * @property \Carbon\Carbon $unsubscribed_at
- * @property int $unsubscribed_by
  * @property \Illuminate\Database\Eloquent\Model $newsletter
  * @property \Illuminate\Database\Eloquent\Model $subscriber
+ * @property \Carbon\Carbon $deleted_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
 class Subscription extends Model
 {
-    use Uuids;
+    use Uuids, SoftDeletes;
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -51,7 +50,7 @@ class Subscription extends Model
      *
      * @var array
      */
-    protected $dates = ['opted_in_at', 'unsubscribed_at'];
+    protected $dates = ['opted_in_at', 'deleted_at'];
 
     /**
      * The attributes that should be casted to native types.

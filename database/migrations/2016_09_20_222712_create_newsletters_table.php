@@ -16,7 +16,7 @@ class CreateNewslettersTable extends Migration
         Schema::create('newsletters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->index();
             $table->text('description')->nullable();
             $table->boolean('requires_opt_in')->default(true);
             $table->timestamps();
