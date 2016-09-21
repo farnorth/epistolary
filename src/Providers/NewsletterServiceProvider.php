@@ -31,6 +31,10 @@ class NewsletterServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../../views', 'newsletters');
 
+        if (method_exists($this, 'loadMigrationsFrom')) {
+            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        }
+
         $this->registerPublishes();
     }
 
