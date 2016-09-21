@@ -73,7 +73,7 @@ class Newsletter extends Model
      */
     public function getCurrentSubscribers()
     {
-        $query = $this->subscriptions()->where('unsubscribed', false);
+        $query = $this->subscriptions();
 
         if ($this->requires_opt_in) {
             $query->where('opted_in', true);

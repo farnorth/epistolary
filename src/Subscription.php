@@ -36,14 +36,14 @@ class Subscription extends Model
      *
      * @var string
      */
-    protected $table = 'newsletter_susbcriptions';
+    protected $table = 'newsletter_subscriptions';
 
     /**
      * The attributes that are not mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['id', 'updated_at', 'created_at'];
+    protected $guarded = ['id', 'deleted_at', 'updated_at', 'created_at'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -60,8 +60,6 @@ class Subscription extends Model
     protected $casts = [
         'newsletter_id' => 'integer',
         'subscriber_id' => 'integer',
-        'unsubscribed_by' => 'integer',
-        'unsubscribed' => 'boolean',
         'opted_in' => 'boolean',
     ];
 
