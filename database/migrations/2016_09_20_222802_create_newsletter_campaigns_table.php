@@ -17,6 +17,7 @@ class CreateNewsletterCampaignsTable extends Migration
             $table->unsignedInteger('newsletter_id')->index();
             $table->string('name');
             $table->string('slug');
+            $table->text('description')->nullable();
             $table->timestamp('send_at')->nullable();
             $table->boolean('sent')->default(false);
             $table->timestamp('sent_at')->nullable();
