@@ -55,7 +55,7 @@ $factory->define(Pilaster\Newsletters\Subscription::class, function (Faker\Gener
     return [
         'newsletter_id' => 0,
         'subscriber_id' => 0,
-        'description' => $faker->paragraphs(3),
+        'description' => $faker->paragraph(3),
         'opted_in' => $faker->boolean(75),
         'opted_in_at' => $faker->dateTimeBetween('-30 days', 'now')->getTimestamp(),
         'deleted_at' => $deleted_at,
