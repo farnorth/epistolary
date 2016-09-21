@@ -1,6 +1,7 @@
 {
     "name": "pilaster/newsletters",
     "description": "Laravel Newsletter Management",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Ryan Winchester",
@@ -8,7 +9,8 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.5.9",
+        "ramsey/uuid": "^3.5"
     },
     "require-dev": {
         "laravel/framework": "5.2.*|5.3.*",

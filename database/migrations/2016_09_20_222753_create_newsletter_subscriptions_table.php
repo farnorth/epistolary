@@ -13,7 +13,7 @@ class CreateNewsletterSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('newsletter_subscriptions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->unsignedInteger('newsletter_id')->index();
             $table->unsignedInteger('subscriber_id')->index();
             $table->boolean('opted_in')->default(false);

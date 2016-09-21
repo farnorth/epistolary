@@ -23,10 +23,41 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Subscription extends Model
 {
+    use Uuids;
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'newsletter_susbcriptions';
 
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id', 'updated_at', 'created_at'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['opted_in_at', 'unsubscribed_at'];
 
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'newsletter_id' => 'integer',
         'subscriber_id' => 'integer',
