@@ -29,24 +29,15 @@ class NewsletterServiceProvider extends ServiceProvider
             $this->mapApiRoutes();
         }
 
-        $this->loadViewsFrom(__DIR__.'/../../views', 'newsletters');
-
+        // In Laravel 5.3 you don't need to publish your migrations,
+        // you can just load them. So let's check if we can do that!
         if (method_exists($this, 'loadMigrationsFrom')) {
             $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         }
 
-        $this->registerPublishes();
-    }
+        $this->loadViewsFrom(__DIR__.'/../../views', 'newsletters');
 
-    /**
-     * Register file group publishing
-     */
-    private function registerPublishes()
-    {
-        $this->publishes([__DIR__.'/../../config/newsletters.php' => config_path('newsletters.php')], 'config');
-        $this->publishes([__DIR__.'/../../database/migrations/' => database_path('migrations')], 'migrations');
-        $this->publishes([__DIR__.'/../../database/factories/' => database_path('factories')], 'factories');
-        $this->publishes([__DIR__.'/../../views' => resource_path('views/vendor/newsletters')], 'views');
+        $this->registerPublishes();
     }
 
     /**
@@ -75,5 +66,16 @@ class NewsletterServiceProvider extends ServiceProvider
         ], function ($router) {
             require __DIR__.'/../../routes/api.php';
         });
+    }
+
+    /**
+     * Register file group publishing
+     */
+    private function registerPublishes()
+    {
+        $this->publishes([__DIR__.'/../../config/newsletters.php' => config_path('newsletters.php')], 'config');
+        $this->publishes([__DIR__.'/../../database/migrations/' => database_path('migrations')], 'migrations');
+        $this->publishes([__DIR__.'/../../database/factories/' => database_path('factories')], 'factories');
+        $this->publishes([__DIR__.'/../../views' => resource_path('views/vendor/newsletters')], 'views');
     }
 }
