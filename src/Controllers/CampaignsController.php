@@ -43,8 +43,9 @@ class CampaignsController extends Controller
     public function edit($campaign_id)
     {
         $campaign = Campaign::find($campaign_id);
+        $lists = MailingList::all();
 
-        return view('newsletters::campaigns.edit', compact('campaign'));
+        return view('newsletters::campaigns.edit', compact('campaign', 'lists'));
     }
 
     /**
@@ -58,8 +59,19 @@ class CampaignsController extends Controller
     {
         $campaign = Campaign::find($campaign_id);
         $campaign->update($this->campaignAttributesFrom($request));
+        $action = 'Updated';
 
-        session()->flash('success', sprintf('Updated campaign %s', $campaign->name));
+        if ($request->has('send_now')) {
+            $campaign = $this->sendCampaign($campaign);
+            $action = 'Sent';
+        }
+
+        if ($request->has('schedule_now')) {
+            $campaign = $this->scheduleCampaign($campaign);
+            $action = 'Scheduled';
+        }
+
+        session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
 
         return redirect()->route('newsletters::campaigns.index');
     }
@@ -72,11 +84,12 @@ class CampaignsController extends Controller
      */
     public function create(Request $request)
     {
+        $campaign = new Campaign();
         $lists = MailingList::all();
         $list = $this->getList($request->input('list'));
-        $for_list = $list ? $list->id : null;
+        $campaign->list_id = $list ? $list->id : null;
 
-        return view('newsletters::campaigns.create', compact('lists', 'for_list'));
+        return view('newsletters::campaigns.create', compact('campaign', 'lists'));
     }
 
     /**
@@ -87,9 +100,23 @@ class CampaignsController extends Controller
      */
     public function store(Request $request)
     {
-        $campaign = Campaign::create($this->campaignAttributesFrom($request));
+        $campaign = new Campaign($this->campaignAttributesFrom($request));
+        $action = 'Created';
 
-        session()->flash('success', sprintf('Created campaign %s', $campaign->name));
+        $campaign->addAttachments($request->input('attached_files', []));
+        $campaign->save();
+
+        if ($request->has('send_now')) {
+            $campaign = $this->sendCampaign($campaign);
+            $action = 'Sent';
+        }
+
+        if ($request->has('schedule_now')) {
+            $campaign = $this->scheduleCampaign($campaign);
+            $action = 'Scheduled';
+        }
+
+        session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
 
         return redirect()->route('newsletters::campaigns.index');
     }
@@ -108,6 +135,35 @@ class CampaignsController extends Controller
         session()->flash('success', sprintf('Deleted campaign %s', $campaign->name));
 
         return redirect()->route('newsletters::campaigns.index');
+    }
+
+    /**
+     * Send the campaign rite nao!
+     *
+     * @param \Pilaster\Newsletters\Campaign $campaign
+     * @return \Pilaster\Newsletters\Campaign
+     */
+    private function sendCampaign(Campaign $campaign)
+    {
+        // TODO: Send campaign now
+
+        return $campaign;
+    }
+
+    /**
+     * Schedule the campaign to be sent in the future.
+     *
+     * @param \Pilaster\Newsletters\Campaign $campaign
+     * @return \Pilaster\Newsletters\Campaign
+     */
+    private function scheduleCampaign(Campaign $campaign)
+    {
+        // TODO: Schedule campaign now
+
+        $campaign->is_scheduled = true;
+        $campaign->save();
+
+        return $campaign;
     }
 
     /**
@@ -137,7 +193,7 @@ class CampaignsController extends Controller
             'list_id' => $request->input('list_id'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'send_at' => $request->input('send_at') ? new Carbon($request->input('send_at')) : null,
+            'scheduled_for' => $request->input('scheduled_for') ? new Carbon($request->input('scheduled_for')) : null,
         ];
     }
 }

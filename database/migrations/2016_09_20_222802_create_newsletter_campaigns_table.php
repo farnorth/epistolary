@@ -17,9 +17,11 @@ class CreateNewsletterCampaignsTable extends Migration
             $table->unsignedInteger('list_id')->index();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->timestamp('send_at')->nullable();
+            $table->boolean('is_scheduled')->default(false);
+            $table->timestamp('scheduled_for')->nullable();
             $table->boolean('sent')->default(false);
             $table->timestamp('sent_at')->nullable();
+            $table->json('attachments')->nullable();
             $table->timestamps();
         });
     }

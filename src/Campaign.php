@@ -11,9 +11,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $list_id
  * @property string $name
  * @property string $description
+ * @property boolean $is_scheduled
+ * @property \Carbon\Carbon $scheduled_for
  * @property boolean $sent
  * @property \Carbon\Carbon $sent_at
- * @property \Carbon\Carbon $send_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
@@ -38,7 +39,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    protected $dates = ['send_at', 'sent_at'];
+    protected $dates = ['scheduled_for', 'sent_at'];
 
     /**
      * The attributes that should be casted to native types.
@@ -47,7 +48,9 @@ class Campaign extends Model
      */
     protected $casts = [
         'list_id' => 'integer',
+        'is_scheduled' => 'boolean',
         'sent' => 'boolean',
+        'attachments' => 'json',
     ];
 
     /**
@@ -56,5 +59,12 @@ class Campaign extends Model
     public function mailingList()
     {
         return $this->belongsTo(MailingList::class, 'list_id');
+    }
+
+    public function addAttachments($attachments)
+    {
+        $this->attachments = collect($attachments)->toJson();
+
+        return $this;
     }
 }

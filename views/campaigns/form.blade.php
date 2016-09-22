@@ -3,7 +3,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-        <li role="presentation"><a href="#template" aria-controls="template" role="tab" data-toggle="tab">Template</a></li>
+        {{--<li role="presentation"><a href="#template" aria-controls="template" role="tab" data-toggle="tab">Template</a></li>--}}
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -13,17 +13,32 @@
             @include('newsletters::campaigns.form-tab-settings')
         </div>
         <!-- TEMPLATE TAB -->
+        {{--
         <div role="tabpanel" class="tab-pane" id="template">
             <br>
             @include('newsletters::campaigns.form-tab-template')
         </div>
+        --}}
     </div>
 
 </div>
 <!-- SUBMIT OR CANCEL -->
 <div class="form-group">
     <button type="submit" class="btn btn-primary">Save Campaign</button>
-    <button type="submit" class="btn btn-success">Schedule Campaign</button>
-    <button type="submit" class="btn btn-warning">Send Campaign Now</button>
+    <input type="submit" name="schedule_now" value="Schedule Campaign" class="btn btn-success confirm-schedule">
+    <input type="submit" name="send_now" value="Send Campaign Now" class="btn btn-warning confirm-send">
     <a href="{{ route('newsletters::campaigns.index') }}" class="btn btn-default">Cancel</a>
 </div>
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.confirm-schedule').click(function(event){
+                return confirm("Are you sure you want to schedule this?");
+            });
+            $('.confirm-send').click(function(event){
+                return confirm("Are you sure you want to send it now? There is no going back once you do.");
+            });
+        });
+    </script>
+@endpush

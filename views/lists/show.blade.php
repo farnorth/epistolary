@@ -4,15 +4,8 @@
   <h1>List: {{ $list->name }}</h1>
 
   <h3>Campaigns</h3>
-
   @if ($list->campaigns->count())
-    <table class="table table-striped">
-      @foreach ($list->campaigns as $campaign)
-        <tr>
-          <td><a href="{{ route('newsletters::campaigns.show', [$campaign->id]) }}">{{ $campaign->name }}</a></td>
-        </tr>
-      @endforeach
-    </table>
+    @include('newsletters::campaigns.index-grid', ['campaigns' => $list->campaigns])
   @else
     <h5><em>Create your first <strong>{{ $list->name }}</strong> campaign now!</em></h5>
   @endif
