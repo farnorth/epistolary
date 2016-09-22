@@ -8,7 +8,7 @@ use Pilaster\Newsletters\MailingList;
 class ListsController extends Controller
 {
     /**
-     * Display a listing of newsletters.
+     * Display a listing of mailing lists.
      *
      * @return \Illuminate\View\View
      */
@@ -20,7 +20,7 @@ class ListsController extends Controller
     }
 
     /**
-     * Show a single newsletter.
+     * Show a single mailing list.
      *
      * @param int|string $list_id
      * @return \Illuminate\View\View
@@ -33,7 +33,7 @@ class ListsController extends Controller
     }
 
     /**
-     * Show the form to edit a newsletter.
+     * Show the form to edit a mailing list.
      *
      * @param int|string $list_id
      * @return \Illuminate\View\View

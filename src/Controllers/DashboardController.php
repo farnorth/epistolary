@@ -2,8 +2,7 @@
 
 namespace Pilaster\Newsletters\Controllers;
 
-use Illuminate\Http\Request;
-use Pilaster\Newsletters\Newsletter;
+use Pilaster\Newsletters\MailingList;
 
 class DashboardController extends Controller
 {
@@ -14,8 +13,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $newsletters = Newsletter::with('campaigns')->get();
+        $lists = MailingList::with('campaigns')->get();
 
-        return view('newsletters::dashboard', compact('newsletters'));
+        return view('newsletters::dashboard', compact('lists'));
     }
 }

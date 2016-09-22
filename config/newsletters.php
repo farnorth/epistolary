@@ -2,6 +2,8 @@
 
 return [
 
-    // TODO: config goes here
+    'attachments' => [
+        'path' => storage_path('emails/attachments'),
+    ],
 
 ];

@@ -49,4 +49,12 @@ class Campaign extends Model
         'list_id' => 'integer',
         'sent' => 'boolean',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function mailingList()
+    {
+        return $this->belongsTo(MailingList::class, 'list_id');
+    }
 }

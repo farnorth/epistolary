@@ -46,12 +46,12 @@ class MailingList extends Model
     /**
      * Get a newsletter by its slug.
      *
-     * @param string $newsletter_slug
-     * @return Newsletter
+     * @param string $list_slug
+     * @return MailingList
      */
-    public static function getBySlug($newsletter_slug)
+    public static function getBySlug($list_slug)
     {
-        return static::where('slug', $newsletter_slug)->first();
+        return static::where('slug', $list_slug)->first();
     }
 
     /**
@@ -79,7 +79,7 @@ class MailingList extends Model
     }
 
     /**
-     * Get all the currently subscribed members of this newsletter. This
+     * Get all the currently subscribed members of this list. This
      * excludes unsubscribed members (obviously), and if required,
      * members who have not opted in.
      *

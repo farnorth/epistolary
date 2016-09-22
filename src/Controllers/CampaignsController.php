@@ -2,8 +2,10 @@
 
 namespace Pilaster\Newsletters\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Pilaster\Newsletters\Campaign;
+use Pilaster\Newsletters\MailingList;
 
 class CampaignsController extends Controller
 {
@@ -27,7 +29,7 @@ class CampaignsController extends Controller
      */
     public function show($campaign_id)
     {
-        $campaign = $this->getCampaign($campaign_id);
+        $campaign = Campaign::find($campaign_id);
 
         return view('newsletters::campaigns.show', compact('campaign'));
     }
@@ -40,7 +42,7 @@ class CampaignsController extends Controller
      */
     public function edit($campaign_id)
     {
-        $campaign = $this->getCampaign($campaign_id);
+        $campaign = Campaign::find($campaign_id);
 
         return view('newsletters::campaigns.edit', compact('campaign'));
     }
@@ -54,8 +56,8 @@ class CampaignsController extends Controller
      */
     public function update(Request $request, $campaign_id)
     {
-        $campaign = $this->getCampaign($campaign_id);
-        $campaign->update($this->newsletterAttributesFrom($request));
+        $campaign = Campaign::find($campaign_id);
+        $campaign->update($this->campaignAttributesFrom($request));
 
         session()->flash('success', sprintf('Updated campaign %s', $campaign->name));
 
@@ -65,11 +67,16 @@ class CampaignsController extends Controller
     /**
      * Show the form to create a new newsletter.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('newsletters::campaigns.create');
+        $lists = MailingList::all();
+        $list = $this->getList($request->input('list'));
+        $for_list = $list ? $list->id : null;
+
+        return view('newsletters::campaigns.create', compact('lists', 'for_list'));
     }
 
     /**
@@ -80,8 +87,7 @@ class CampaignsController extends Controller
      */
     public function store(Request $request)
     {
-        $campaign = new Campaign($this->newsletterAttributesFrom($request));
-        $campaign->save();
+        $campaign = Campaign::create($this->campaignAttributesFrom($request));
 
         session()->flash('success', sprintf('Created campaign %s', $campaign->name));
 
@@ -96,7 +102,7 @@ class CampaignsController extends Controller
      */
     public function destroy($campaign_id)
     {
-        $campaign = $this->getCampaign($campaign_id);
+        $campaign = Campaign::find($campaign_id);
         $campaign->delete();
 
         session()->flash('success', sprintf('Deleted campaign %s', $campaign->name));
@@ -105,18 +111,18 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Get a newsletter by its ID or slug.
+     * Get a mailing list by its ID or slug.
      *
-     * @param int|string $campaign
-     * @return \Pilaster\Newsletters\Campaign
+     * @param int|string $list
+     * @return \Pilaster\Newsletters\MailingList
      */
-    private function getCampaign($campaign)
+    private function getList($list)
     {
-        if (is_numeric($campaign)) {
-            return Campaign::find($campaign);
+        if (is_numeric($list)) {
+            return MailingList::find($list);
         }
 
-        return Campaign::getBySlug($campaign);
+        return MailingList::getBySlug($list);
     }
 
     /**
@@ -125,12 +131,13 @@ class CampaignsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return array
      */
-    private function newsletterAttributesFrom(Request $request)
+    private function campaignAttributesFrom(Request $request)
     {
         return [
             'list_id' => $request->input('list_id'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
+            'send_at' => $request->input('send_at') ? new Carbon($request->input('send_at')) : null,
         ];
     }
 }

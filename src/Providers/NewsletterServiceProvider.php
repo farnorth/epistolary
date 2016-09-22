@@ -71,7 +71,7 @@ class NewsletterServiceProvider extends ServiceProvider
         Route::group([
             'as' => 'newsletters.api::',
             'namespace' => 'Pilaster\Newsletters\Controllers\Api',
-            'middleware' => ['auth', 'api'],
+            'middleware' => ['api'],
         ], function ($router) {
             require __DIR__.'/../../routes/api.php';
         });
