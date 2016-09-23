@@ -64,14 +64,15 @@ class CampaignsController extends Controller
         $campaign->update($this->campaignAttributesFrom($request));
         $action = 'Updated';
 
+        // Is the campaign scheduled to be sent in the future?
+        if ($campaign->is_scheduled && !empty($campaign->scheduled_for)) {
+            $action = 'Scheduled';
+        }
+
+        // Is the campaign being sent now?
         if ($request->has('send_now')) {
             $campaign = $this->sendCampaign($campaign);
             $action = 'Sent';
-        }
-
-        if ($request->has('schedule_now')) {
-            $campaign = $this->scheduleCampaign($campaign);
-            $action = 'Scheduled';
         }
 
         session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
