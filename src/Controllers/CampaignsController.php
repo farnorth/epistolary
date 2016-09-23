@@ -11,7 +11,7 @@ use Pilaster\Newsletters\Requests\CampaignRequest;
 class CampaignsController extends Controller
 {
     /**
-     * Display a listing of newsletters.
+     * Display a listing of campaigns.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
@@ -24,7 +24,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Show a single newsletter.
+     * Show a single campaign.
      *
      * @param int|string $campaign_id
      * @return \Illuminate\View\View
@@ -37,7 +37,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Show the form to edit a newsletter.
+     * Show the form to edit a campaign.
      *
      * @param int|string $campaign_id
      * @return \Illuminate\View\View
@@ -52,7 +52,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Update a newsletter.
+     * Update a campaign.
      *
      * @param \Pilaster\Newsletters\Requests\CampaignRequest $request
      * @param int|string $campaign_id
@@ -80,7 +80,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Show the form to create a new newsletter.
+     * Show the form to create a new campaign.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
@@ -96,7 +96,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Save a newly created newsletter to the database.
+     * Save a newly created campaign to the database.
      *
      * @param \Pilaster\Newsletters\Requests\CampaignRequest $request
      * @return \Illuminate\Http\RedirectResponse
@@ -126,7 +126,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Delete a newsletter.
+     * Delete a campaign.
      *
      * @param int|string $campaign_id
      * @return \Illuminate\Http\RedirectResponse
@@ -155,7 +155,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Build the array of attributes for a newsletter from a request.
+     * Build the array of attributes for a campaign from a request.
      *
      * @param \Illuminate\Http\Request $request
      * @return array
