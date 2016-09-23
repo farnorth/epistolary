@@ -19,32 +19,26 @@ Pilaster\Newsletters\Providers\NewsletterServiceProvider::class,
 
 ### Optional Additional Setup
 
-To publish all of the file groups (assets/views/migrations/etc.) do:
+To publish all of the file groups (config/views/migrations/etc.) do:
 
-```
+```bash
 php artisan vendor:publish --provider="Pilaster\Newsletters\Providers\NewsletterServiceProvider"
 ```
 
-or to publish just the views:
+You can specify only certain file groups by adding the `--tag` option:
 
-```
-php artisan vendor:publish --provider="Pilaster\Newsletters\Providers\NewsletterServiceProvider" --tag="views"
-```
-
-The same can be done for config, migrations, factories, and seeds. i.e.:
-
-```
+```bash
 --tag=views,config,migrations,factories,seeds
 ```
 
-You can use `--force` at the end to overwrite older versions of any published file groups.
+You can use also add the `--force` option at the end to overwrite older versions of any previously published file groups.
 
 After publishing the database file groups you can migrate and seed the database with dummy test data:
 
-```
+```bash
 php artisan migrate
 ```
 
-```
+```bash
 php artisan db:seed --class=NewsletterDatabaseSeeder
 ```
