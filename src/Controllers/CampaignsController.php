@@ -46,8 +46,9 @@ class CampaignsController extends Controller
     {
         $campaign = Campaign::find($campaign_id);
         $lists = MailingList::all();
+        $default_time = $this->getDefaultTime($campaign);
 
-        return view('newsletters::campaigns.edit', compact('campaign', 'lists'));
+        return view('newsletters::campaigns.edit', compact('campaign', 'lists', 'default_time'));
     }
 
     /**
@@ -89,8 +90,9 @@ class CampaignsController extends Controller
         $campaign = new Campaign();
         $campaign->list_id = $request->input('list_id');
         $lists = MailingList::all();
+        $default_time =  $this->getDefaultTime($campaign);
 
-        return view('newsletters::campaigns.create', compact('campaign', 'lists'));
+        return view('newsletters::campaigns.create', compact('campaign', 'lists', 'default_time'));
     }
 
     /**
@@ -101,7 +103,6 @@ class CampaignsController extends Controller
      */
     public function store(CampaignRequest $request)
     {
-        dd($request->all());
         $campaign = new Campaign($this->campaignAttributesFrom($request));
         $action = 'Created';
 
@@ -168,5 +169,18 @@ class CampaignsController extends Controller
             'is_scheduled' => (bool) $request->input('is_scheduled', false),
             'scheduled_for' => $request->input('scheduled_for') ? new Carbon($request->input('scheduled_for')) : null,
         ];
+    }
+
+    /**
+     * Get the default time timestamp to set the schedule to.
+     *
+     * @param \Pilaster\Newsletters\Campaign $campaign
+     * @return int
+     */
+    private function getDefaultTime(Campaign $campaign)
+    {
+        old('scheduled_for', ($campaign->scheduled_for ? $campaign->scheduled_for->timestamp : time()));
+
+        return !empty($defaultTime) ? $defaultTime : time();
     }
 }

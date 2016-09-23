@@ -13,7 +13,7 @@ class CreateNewsletterSubscribersTable extends Migration
     public function up()
     {
         Schema::create('newsletter_subscribers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->string('email')->unqiue();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();

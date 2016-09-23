@@ -14,7 +14,7 @@
     <div class="col-md-2 text-center">
       <h4><a href="{{ route('newsletters::campaigns.index') }}">Subscribers</a></h4>
       <h4>{{ $list->subscriptions()->count() }}</h4>
-      <a class="btn btn-primary btn-sm" href="{{ route('newsletters::campaigns.create') }}?list_id={{ $list->id }}">Add a subscriber</a>
+      <a class="btn btn-primary btn-sm" href="{{ route('newsletters::subscribers.create') }}?list_id={{ $list->id }}">Add a subscriber</a>
     </div>
   </div>
 

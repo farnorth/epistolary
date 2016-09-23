@@ -32,7 +32,7 @@
     $(function () {
         var $isScheduled = $('#scheduled-checkbox').find('input');
         var $scheduled_for = $('#scheduled_for');
-        var defaultTime = moment.utc({{old('scheduled_for', ($campaign->scheduled_for ? $campaign->scheduled_for->timestamp : time()))}}, 'X').add(1, 'days');
+        var defaultTime = moment.utc({{$default_time}}, 'X').add(1, 'days');
         // Set the scheduled_for default
         if ($isScheduled.is(':checked') && !$scheduled_for.val()) {
             $scheduled_for.val(defaultTime.toISOString());

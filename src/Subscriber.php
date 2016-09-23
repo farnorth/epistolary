@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Subscriber
  *
- * @property int $id
+ * @property string $id
  * @property string $first_name
  * @property string $last_name
  * @property string $email
@@ -18,6 +18,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Subscriber extends Model
 {
+    use Uuids;
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
     /**
      * The table associated with the model.
      *
@@ -48,5 +57,17 @@ class Subscriber extends Model
         return $this->belongsToMany(MailingList::class, 'newsletter_subscriptions', 'list_id')
             ->withPivot(['unsubscribed', 'unsubscribed_at', 'unsubscribed_by'])
             ->withTimestamps();
+    }
+
+    /**
+     * Update the subscriber's subscriptions.
+     *
+     * @param $subscriptions
+     */
+    public function updateSubscriptions($subscriptions)
+    {
+        collect($subscriptions)->each(function (Subscription $subscription) {
+            $this->subscriptions()->save($subscription);
+        });
     }
 }

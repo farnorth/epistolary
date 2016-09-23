@@ -2,6 +2,7 @@
 
 namespace Pilaster\Newsletters\Providers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,6 +39,8 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../views', 'newsletters');
 
         $this->registerPublishes();
+
+        $this->registerCollectionMacros();
     }
 
     /**
@@ -77,5 +80,12 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../../database/migrations/' => database_path('migrations')], 'migrations');
         $this->publishes([__DIR__.'/../../database/factories/' => database_path('factories')], 'factories');
         $this->publishes([__DIR__.'/../../views' => resource_path('views/vendor/newsletters')], 'views');
+    }
+
+    private function registerCollectionMacros()
+    {
+        Collection::macro('hasWhere', function ($property, $value) {
+            return !is_null($this->where($property, $value)->first());
+        });
     }
 }

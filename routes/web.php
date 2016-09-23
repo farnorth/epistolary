@@ -66,7 +66,26 @@ $router->get('newsletters/subscribers', [
     'uses' => 'SubscribersController@index',
     'as' => 'subscribers.index'
 ]);
-// $router->resource('newsletters/subscribers', 'SubscribersController');
+$router->get('newsletters/subscribers/create', [
+    'uses' => 'SubscribersController@create',
+    'as' => 'subscribers.create'
+]);
+$router->post('newsletters/subscribers', [
+    'uses' => 'SubscribersController@store',
+    'as' => 'subscribers.store'
+]);
+$router->get('newsletters/subscribers/{subscriber_id}/edit', [
+    'uses' => 'SubscribersController@edit',
+    'as' => 'subscribers.edit'
+]);
+$router->get('newsletters/subscribers/{subscriber_id}', [
+    'uses' => 'SubscribersController@show',
+    'as' => 'subscribers.show'
+]);
+$router->put('newsletters/subscribers/{subscriber_id}', [
+    'uses' => 'SubscribersController@update',
+    'as' => 'subscribers.update'
+]);
 
 // ----------------------------------------------------------------------------------------
 // Subscriptions
@@ -93,5 +112,8 @@ $router->get('newsletters/templates', [
 function set_active($path, $active = 'active')
 {
     $segments = request()->segments();
-    return ($segments[0] == 'newsletters' && $segments[1] == $path) ? $active : '';
+    if (count($segments) < 2 || $segments[0] != 'newsletters' || $segments[1] != $path) {
+        return '';
+    }
+    return $active;
 }

@@ -59,7 +59,6 @@ class Subscription extends Model
      */
     protected $casts = [
         'list_id' => 'integer',
-        'subscriber_id' => 'integer',
         'opted_in' => 'boolean',
     ];
 
