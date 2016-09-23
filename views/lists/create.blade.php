@@ -12,6 +12,18 @@
       <input type="text" class="form-control" name="name" id="name" placeholder="List Name" required>
     </div>
 
+    <!-- SENDER EMAIL -->
+    <div class="form-group">
+      <label class="control-label" for="from_email">Sender From Email</label>
+      <input type="email" class="form-control" name="from_email" id="from_email" placeholder="Sender Email Address">
+    </div>
+
+    <!-- SENDER NAME -->
+    <div class="form-group">
+      <label class="control-label" for="from_name">Sender From Name</label>
+      <input type="text" class="form-control" name="from_name" id="from_name" placeholder="Sender Name">
+    </div>
+
     <!-- DESCRIPTION -->
     <div class="form-group">
       <label class="control-label" for="description">Description</label>

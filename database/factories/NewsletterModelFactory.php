@@ -16,6 +16,8 @@ $factory->define(Pilaster\Newsletters\MailingList::class, function (Faker\Genera
     return [
         'name' => $name,
         'slug' => str_slug($name),
+        'from_name' => $faker->name,
+        'from_email' => $faker->email,
         'description' => $faker->paragraph(3),
         'requires_opt_in' => $faker->boolean(75),
     ];
@@ -28,6 +30,7 @@ $factory->define(Pilaster\Newsletters\Campaign::class, function (Faker\Generator
     ]);
     return [
         'name' => $faker->bs,
+        'subject' => $faker->bs,
         'list_id' => $faker->numberBetween(1, 5),
         'description' => $faker->paragraph(3),
         'is_sent' => !empty($sent_at),
@@ -54,7 +57,7 @@ $factory->define(Pilaster\Newsletters\Subscription::class, function (Faker\Gener
         null
     ]);
     return [
-        'list_id' => $faker->numberBetween(1, 50),
+        'list_id' => $faker->numberBetween(1, 5),
         'subscriber_id' => 1,
         'opted_in' => $faker->boolean(75),
         'opted_in_at' => $faker->dateTimeBetween('-30 days', 'now')->getTimestamp(),

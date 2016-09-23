@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $list_id
  * @property string $name
+ * @property string $subject
  * @property string $description
  * @property array $attachments
  * @property boolean $is_scheduled
@@ -73,5 +74,15 @@ class Campaign extends Model
         $this->attachments = (array) $attachments;
 
         return $this;
+    }
+
+    public function attachmentPath($attachment = null)
+    {
+        return sprintf('%s/%s', config('newsletters.attachments.path'), $attachment);
+    }
+
+    public function send()
+    {
+        $this->mailingList->sendCampaign($this);
     }
 }

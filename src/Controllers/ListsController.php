@@ -131,6 +131,8 @@ class ListsController extends Controller
         return [
             'name' => $request->input('name'),
             'slug' => str_slug($request->input('name')),
+            'from_email' => $request->input('from_email'),
+            'from_name' => $request->input('from_name'),
             'description' => $request->input('description'),
             'requires_opt_in' => $request->input('requires_opt_in', true),
         ];

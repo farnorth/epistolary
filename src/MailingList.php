@@ -3,6 +3,8 @@
 namespace Pilaster\Newsletters;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class Newsletter
@@ -10,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string $slug
+ * @property string $from_email
+ * @property string $from_name
  * @property string $description
  * @property boolean $requires_opt_in
  * @property \Illuminate\Database\Eloquent\Collection $campaigns
@@ -94,13 +98,56 @@ class MailingList extends Model
     }
 
     /**
+     * Send a campaign to its subscribers.
+     *
+     * @param \Pilaster\Newsletters\Campaign $campaign
+     * @return bool
+     */
+    public function sendCampaign(Campaign $campaign)
+    {
+        $to = $this->getMessageToList();
+
+        if (empty($to)) {
+            return false;
+        }
+
+        Mail::send('newsletters::emails.default', ['campaign' => $campaign], function (Message $message) use ($to, $campaign) {
+            $message->to($to);
+            if ($this->from_email) {
+                $message->from($this->from_email, $this->from_name);
+            }
+            $message->subject($campaign->subject);
+            foreach ($campaign->attachments as $attachment) {
+                $message->attach($campaign->attachmentPath($attachment));
+            }
+        });
+
+        return true;
+    }
+
+    /**
+     * Get an array of subscribers for the Message::to() method.
+     *
+     * @return array
+     */
+    public function getMessageToList()
+    {
+        return $this->getCurrentSubscriptions()->reject(function ($subscription) {
+            return empty($subscription->subscriber);
+        })->flatMap(function ($subscription) {
+            $subscriber = $subscription->subscriber;
+            return [$subscriber->email => trim($subscriber->first_name.' '.$subscriber->last_name)];
+        })->toArray();
+    }
+
+    /**
      * Get all the currently subscribed members of this list. This
      * excludes unsubscribed members (obviously), and if required,
      * members who have not opted in.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getCurrentSubscribers()
+    public function getCurrentSubscriptions()
     {
         $query = $this->subscriptions();
 
@@ -108,8 +155,6 @@ class MailingList extends Model
             $query->where('opted_in', true);
         }
 
-        return $query->with('subscribers')
-            ->get()
-            ->subscribers;
+        return $query->with('subscriber')->get();
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string $id
  * @property int $list_id
- * @property int $subscriber_id
+ * @property string $subscriber_id
  * @property string $description
  * @property boolean $opted_in
  * @property \Carbon\Carbon $opted_in_at

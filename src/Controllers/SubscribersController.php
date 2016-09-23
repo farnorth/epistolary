@@ -141,7 +141,7 @@ class SubscribersController extends Controller
     private function makeSubscriptionsFromRequest(Request $request, $subscriber_id)
     {
         return collect($request->input('list_id', []))->map(function ($list_id) use ($subscriber_id) {
-            return Subscription::firstOrCreate([
+            return Subscription::updateOrCreate([
                 'list_id' => $list_id,
                 'subscriber_id' => $subscriber_id,
             ], [

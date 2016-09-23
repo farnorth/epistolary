@@ -17,6 +17,8 @@ class CreateNewsletterListsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('slug')->unique()->index();
+            $table->string('from_email')->nullable();
+            $table->string('from_name')->nullable();
             $table->text('description')->nullable();
             $table->boolean('requires_opt_in')->default(true);
             $table->timestamps();

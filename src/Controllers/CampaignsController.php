@@ -62,6 +62,7 @@ class CampaignsController extends Controller
     {
         $campaign = Campaign::find($campaign_id);
         $campaign->update($this->campaignAttributesFrom($request));
+        $status = 'success';
         $action = 'Updated';
 
         // Is the campaign scheduled to be sent in the future?
@@ -71,11 +72,14 @@ class CampaignsController extends Controller
 
         // Is the campaign being sent now?
         if ($request->has('send_now')) {
-            $campaign = $this->sendCampaign($campaign);
             $action = 'Sent';
+            if (!$campaign->send()) {
+                $status = 'error';
+                $action = 'Could not send';
+            }
         }
 
-        session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
+        session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
 
         return redirect()->route('newsletters::campaigns.index');
     }
@@ -105,6 +109,7 @@ class CampaignsController extends Controller
     public function store(CampaignRequest $request)
     {
         $campaign = new Campaign($this->campaignAttributesFrom($request));
+        $status = 'success';
         $action = 'Created';
 
         $campaign->addAttachments($request->input('attached_files', []));
@@ -117,11 +122,13 @@ class CampaignsController extends Controller
 
         // Is the campaign being sent now?
         if ($request->has('send_now')) {
-            $campaign = $this->sendCampaign($campaign);
             $action = 'Sent';
+            if (!$campaign->send()) {
+                $status = 'error';
+            }
         }
 
-        session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
+        session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
 
         return redirect()->route('newsletters::campaigns.index');
     }
@@ -166,6 +173,7 @@ class CampaignsController extends Controller
         return [
             'list_id' => $request->input('list_id'),
             'name' => $request->input('name'),
+            'subject' => $request->input('subject'),
             'description' => $request->input('description'),
             'is_scheduled' => (bool) $request->input('is_scheduled', false),
             'scheduled_for' => $request->input('scheduled_for') ? new Carbon($request->input('scheduled_for')) : null,

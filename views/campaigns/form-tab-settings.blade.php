@@ -16,6 +16,12 @@
     </select>
 </div>
 
+<!-- subject -->
+<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}">
+    <label class="control-label" for="subject">Subject</label>
+    <input type="text" class="form-control" name="subject" id="subject" placeholder="Email Subject" value="{{ old('subject', $campaign->subject) }}">
+</div>
+
 <!-- description -->
 <div class="form-group {{ $errors->has('description') ? 'has-error' : ''}}">
     <label class="control-label" for="description">Description</label>
