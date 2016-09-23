@@ -5,9 +5,16 @@
 
   @if ($lists->count())
   <table class="table table-striped">
+    <tr>
+      <th>List Name</th>
+      <th>Subscribers</th>
+      <th>Campaigns</th>
+    </tr>
     @foreach ($lists as $list)
       <tr>
         <td><a href="{{ route('newsletters::lists.show', [$list->slug]) }}">{{ $list->name }}</a></td>
+        <td>{{ $list->subscriptions()->count() }}</td>
+        <td>{{ $list->campaigns()->count() }}</td>
       </tr>
     @endforeach
   </table>

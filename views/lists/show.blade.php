@@ -1,15 +1,21 @@
 @extends('newsletters::layout')
 
 @section('content')
-  <h1>List: {{ $list->name }}</h1>
+  <h1>{{ $list->name }}</h1>
 
-  <h3>Campaigns</h3>
-  @if ($list->campaigns->count())
-    @include('newsletters::campaigns.index-grid', ['campaigns' => $list->campaigns])
-  @else
-    <h5><em>Create your first <strong>{{ $list->name }}</strong> campaign now!</em></h5>
-  @endif
-
-  <a class="btn btn-primary" href="{{ route('newsletters::campaigns.create') }}?list={{ $list->slug }}">Add a campaign</a>
+  <div class="row">
+    <!-- Campaigns -->
+    <div class="col-md-2 text-center">
+      <h4><a href="{{ route('newsletters::campaigns.index') }}">Campaigns</a></h4>
+      <h4>{{ $list->campaigns()->count() }}</h4>
+      <a class="btn btn-primary btn-sm" href="{{ route('newsletters::campaigns.create') }}?list_id={{ $list->id }}">Add a campaign</a>
+    </div>
+    <!-- Subscribers -->
+    <div class="col-md-2 text-center">
+      <h4><a href="{{ route('newsletters::campaigns.index') }}">Subscribers</a></h4>
+      <h4>{{ $list->subscriptions()->count() }}</h4>
+      <a class="btn btn-primary btn-sm" href="{{ route('newsletters::campaigns.create') }}?list_id={{ $list->id }}">Add a subscriber</a>
+    </div>
+  </div>
 
 @endsection

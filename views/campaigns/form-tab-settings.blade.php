@@ -1,14 +1,14 @@
 
 <!-- name -->
-<div class="form-group">
+<div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label class="control-label" for="name">Name</label>
-    <input type="text" class="form-control" name="name" id="name" placeholder="Campaign Name" required value="{{ old('name', $campaign->name) }}">
+    <input type="text" class="form-control" name="name" id="name" placeholder="Campaign Name" value="{{ old('name', $campaign->name) }}">
 </div>
 
 <!-- mailing list -->
-<div class="form-group">
+<div class="form-group {{ $errors->has('list_id') ? 'has-error' : ''}}">
     <label class="control-label" for="list_id">Mailing List</label>
-    <select name="list_id" id="list_id" class="form-control" required>
+    <select name="list_id" id="list_id" class="form-control">
         <option disabled selected>Choose a mailing list</option>
         @foreach ($lists as $list)
             <option value="{{ $list->id }}" {{ ($list->id == $campaign->list_id) ? 'selected' : '' }}>{{ $list->name }}</option>
@@ -17,7 +17,7 @@
 </div>
 
 <!-- description -->
-<div class="form-group">
+<div class="form-group {{ $errors->has('description') ? 'has-error' : ''}}">
     <label class="control-label" for="description">Description</label>
     <textarea class="form-control" name="description" id="description" placeholder="Description (optional)" rows="4">{{ old('description', $campaign->description) }}</textarea>
 </div>
@@ -27,7 +27,12 @@
     <div class="form-group">
         <label class="control-label">Attachments</label>
         @foreach ($campaign->attachments as $attachment)
-            <div>{{ $attachment }} <a href="#remove-attachment" class="remove-attachment" data-attachment="{{$attachment}}">Delete</a></div>
+            <div>
+                {{ $attachment }}
+                <a href="#remove-attachment" class="remove-attachment btn btn-default btn-xs" data-attachment="{{$attachment}}">
+                    <i class="fa fa-trash"></i> Delete
+                </a>
+            </div>
         @endforeach
     </div>
 @endif
@@ -44,12 +49,6 @@
         <input type="hidden" name="attachments[]" id="attachment-{{$i}}" value="{{ $attachment }}">
     @endforeach
     @endif
-</div>
-
-<!-- schedule -->
-<div class="form-group">
-    <label for="scheduled_for" class="control-label">Schedule the campaign to send</label>
-    <input type="date" name="scheduled_for" id="scheduled_for" class="form-control" value="{{ old('scheduled_for', $campaign->scheduled_for) }}">
 </div>
 
 @push('styles')

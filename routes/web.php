@@ -81,3 +81,17 @@ $router->get('newsletters/templates', [
     'uses' => 'TemplatesController@index',
     'as' => 'templates.index'
 ]);
+
+
+/**
+ * Return active class if the path matches url segment.
+ *
+ * @param string $path
+ * @param string $active
+ * @return string
+ */
+function set_active($path, $active = 'active')
+{
+    $segments = request()->segments();
+    return ($segments[0] == 'newsletters' && $segments[1] == $path) ? $active : '';
+}

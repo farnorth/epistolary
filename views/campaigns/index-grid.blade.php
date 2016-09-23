@@ -1,4 +1,22 @@
 
+@push('styles')
+<style>
+    .paging-links ul { float: right; }
+</style>
+@endpush
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-8">
+        <select name="filterBy" class="form-control" title="Filter by List">
+            <option value>Filter by Mailing List</option>
+            @foreach (Pilaster\Newsletters\MailingList::get(['name', 'id']) as $list)
+                <option value="{{ $list->id }}">{{ $list->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<br>
+
 @if ($campaigns->count())
 <table class="table table-striped">
     <tr>
@@ -28,6 +46,11 @@
     </tr>
     @endforeach
 </table>
+
+<div class="paging-links clearfix">
+    {{ $campaigns->links() }}
+</div>
+
 @else
 <h5><em>Add your first campaign now!</em></h5>
 @endif

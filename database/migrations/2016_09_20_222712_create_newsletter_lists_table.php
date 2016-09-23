@@ -15,7 +15,7 @@ class CreateNewsletterListsTable extends Migration
     {
         Schema::create('newsletter_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('slug')->unique()->index();
             $table->text('description')->nullable();
             $table->boolean('requires_opt_in')->default(true);

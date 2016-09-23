@@ -55,6 +55,21 @@ class MailingList extends Model
     }
 
     /**
+     * Get a list by its ID or slug.
+     *
+     * @param int|string $list
+     * @return \Pilaster\Newsletters\MailingList
+     */
+    public static function getList($list)
+    {
+        if (is_numeric($list)) {
+            return static::find($list);
+        }
+
+        return static::getBySlug($list);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function campaigns()

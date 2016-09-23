@@ -28,6 +28,7 @@ class ListsController extends Controller
     public function show($list_id)
     {
         $list = $this->getList($list_id);
+        $list->load('campaigns');
 
         return view('newsletters::lists.show', compact('list'));
     }

@@ -6,17 +6,19 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Pilaster\Newsletters\Campaign;
 use Pilaster\Newsletters\MailingList;
+use Pilaster\Newsletters\Requests\CampaignRequest;
 
 class CampaignsController extends Controller
 {
     /**
      * Display a listing of newsletters.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $campaigns = Campaign::all();
+        $campaigns = $this->paginateModel(Campaign::class, $request);
 
         return view('newsletters::campaigns.index', compact('campaigns'));
     }
@@ -51,11 +53,11 @@ class CampaignsController extends Controller
     /**
      * Update a newsletter.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Pilaster\Newsletters\Requests\CampaignRequest $request
      * @param int|string $campaign_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $campaign_id)
+    public function update(CampaignRequest $request, $campaign_id)
     {
         $campaign = Campaign::find($campaign_id);
         $campaign->update($this->campaignAttributesFrom($request));
@@ -85,9 +87,8 @@ class CampaignsController extends Controller
     public function create(Request $request)
     {
         $campaign = new Campaign();
+        $campaign->list_id = $request->input('list_id');
         $lists = MailingList::all();
-        $list = $this->getList($request->input('list'));
-        $campaign->list_id = $list ? $list->id : null;
 
         return view('newsletters::campaigns.create', compact('campaign', 'lists'));
     }
@@ -95,25 +96,27 @@ class CampaignsController extends Controller
     /**
      * Save a newly created newsletter to the database.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Pilaster\Newsletters\Requests\CampaignRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CampaignRequest $request)
     {
+        dd($request->all());
         $campaign = new Campaign($this->campaignAttributesFrom($request));
         $action = 'Created';
 
         $campaign->addAttachments($request->input('attached_files', []));
         $campaign->save();
 
+        // Is the campaign scheduled to be sent in the future?
+        if ($campaign->is_scheduled && !empty($campaign->scheduled_for)) {
+            $action = 'Scheduled';
+        }
+
+        // Is the campaign being sent now?
         if ($request->has('send_now')) {
             $campaign = $this->sendCampaign($campaign);
             $action = 'Sent';
-        }
-
-        if ($request->has('schedule_now')) {
-            $campaign = $this->scheduleCampaign($campaign);
-            $action = 'Scheduled';
         }
 
         session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
@@ -151,37 +154,6 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Schedule the campaign to be sent in the future.
-     *
-     * @param \Pilaster\Newsletters\Campaign $campaign
-     * @return \Pilaster\Newsletters\Campaign
-     */
-    private function scheduleCampaign(Campaign $campaign)
-    {
-        // TODO: Schedule campaign now
-
-        $campaign->is_scheduled = true;
-        $campaign->save();
-
-        return $campaign;
-    }
-
-    /**
-     * Get a mailing list by its ID or slug.
-     *
-     * @param int|string $list
-     * @return \Pilaster\Newsletters\MailingList
-     */
-    private function getList($list)
-    {
-        if (is_numeric($list)) {
-            return MailingList::find($list);
-        }
-
-        return MailingList::getBySlug($list);
-    }
-
-    /**
      * Build the array of attributes for a newsletter from a request.
      *
      * @param \Illuminate\Http\Request $request
@@ -193,6 +165,7 @@ class CampaignsController extends Controller
             'list_id' => $request->input('list_id'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
+            'is_scheduled' => (bool) $request->input('is_scheduled', false),
             'scheduled_for' => $request->input('scheduled_for') ? new Carbon($request->input('scheduled_for')) : null,
         ];
     }

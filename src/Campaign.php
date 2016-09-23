@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $list_id
  * @property string $name
  * @property string $description
+ * @property array $attachments
  * @property boolean $is_scheduled
  * @property \Carbon\Carbon $scheduled_for
  * @property boolean $sent
@@ -61,9 +62,15 @@ class Campaign extends Model
         return $this->belongsTo(MailingList::class, 'list_id');
     }
 
+    /**
+     * Add uploaded attachment (file names) to the Campaign.
+     *
+     * @param array|string $attachments
+     * @return $this
+     */
     public function addAttachments($attachments)
     {
-        $this->attachments = collect($attachments)->toJson();
+        $this->attachments = (array) $attachments;
 
         return $this;
     }
