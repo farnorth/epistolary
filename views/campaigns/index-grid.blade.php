@@ -38,7 +38,7 @@
         <td>{{ $campaign->scheduled_for ? $campaign->scheduled_for->format("Y-m-d H:i:s") : 'No' }}</td>
         <td class="text-center">
             @if ($campaign->is_sent)
-            <i class="fa fa-check"></i>
+            <i class="fa fa-check text-success"></i>
             @else
             <i class="fa fa-times"></i>
             @endif

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property array $attachments
  * @property boolean $is_scheduled
  * @property \Carbon\Carbon $scheduled_for
- * @property boolean $sent
+ * @property boolean $is_sent
  * @property \Carbon\Carbon $sent_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -50,7 +50,7 @@ class Campaign extends Model
     protected $casts = [
         'list_id' => 'integer',
         'is_scheduled' => 'boolean',
-        'sent' => 'boolean',
+        'is_sent' => 'boolean',
         'attachments' => 'json',
     ];
 

@@ -19,7 +19,7 @@ class CreateNewsletterCampaignsTable extends Migration
             $table->text('description')->nullable();
             $table->boolean('is_scheduled')->default(false);
             $table->timestamp('scheduled_for')->nullable();
-            $table->boolean('sent')->default(false);
+            $table->boolean('is_sent')->default(false);
             $table->timestamp('sent_at')->nullable();
             $table->json('attachments')->nullable();
             $table->timestamps();

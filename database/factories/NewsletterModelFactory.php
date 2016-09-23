@@ -12,7 +12,7 @@
 */
 
 $factory->define(Pilaster\Newsletters\MailingList::class, function (Faker\Generator $faker) {
-    $name = $faker->company;
+    $name = $faker->bs;
     return [
         'name' => $name,
         'slug' => str_slug($name),
@@ -27,12 +27,13 @@ $factory->define(Pilaster\Newsletters\Campaign::class, function (Faker\Generator
         null
     ]);
     return [
-        'name' => $faker->company,
-        'list_id' => 1,
+        'name' => $faker->bs,
+        'list_id' => $faker->numberBetween(1, 5),
         'description' => $faker->paragraph(3),
-        'sent' => !empty($sent_at),
+        'is_sent' => !empty($sent_at),
         'sent_at' => $sent_at,
-        'send_at' => $faker->randomElement([
+        'is_scheduled' => $faker->boolean(20),
+        'scheduled_for' => $faker->randomElement([
             $faker->dateTimeBetween('now', '+10 days')->getTimestamp(),
             null
         ]),
@@ -53,7 +54,7 @@ $factory->define(Pilaster\Newsletters\Subscription::class, function (Faker\Gener
         null
     ]);
     return [
-        'list_id' => 1,
+        'list_id' => $faker->numberBetween(1, 50),
         'subscriber_id' => 1,
         'opted_in' => $faker->boolean(75),
         'opted_in_at' => $faker->dateTimeBetween('-30 days', 'now')->getTimestamp(),
