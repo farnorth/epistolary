@@ -22,7 +22,7 @@ class CreateNewsletterCampaignsTable extends Migration
             $table->timestamp('scheduled_for')->nullable();
             $table->boolean('is_sent')->default(false);
             $table->timestamp('sent_at')->nullable();
-            $table->json('attachments')->nullable();
+            $table->text('attachments')->nullable();
             $table->timestamps();
         });
     }
