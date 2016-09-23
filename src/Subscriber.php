@@ -52,22 +52,10 @@ class Subscriber extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function newsletters()
+    public function mailingLists()
     {
         return $this->belongsToMany(MailingList::class, 'newsletter_subscriptions', 'list_id')
-            ->withPivot(['unsubscribed', 'unsubscribed_at', 'unsubscribed_by'])
+            ->withPivot(['deleted_at'])
             ->withTimestamps();
-    }
-
-    /**
-     * Update the subscriber's subscriptions.
-     *
-     * @param $subscriptions
-     */
-    public function updateSubscriptions($subscriptions)
-    {
-        collect($subscriptions)->each(function (Subscription $subscription) {
-            $this->subscriptions()->save($subscription);
-        });
     }
 }
