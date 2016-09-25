@@ -63,7 +63,6 @@ class CampaignsController extends Controller
     {
         $campaign = Campaign::find($campaign_id);
         $campaign->update($this->campaignAttributesFrom($request));
-        $status = 'success';
         $action = 'Updated';
 
         // Is the campaign scheduled to be sent in the future?
@@ -77,7 +76,7 @@ class CampaignsController extends Controller
             $this->dispatch(new SendCampaign($campaign));
         }
 
-        session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
+        session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
 
         return redirect()->route('epistolary::campaigns.index');
     }
@@ -108,7 +107,6 @@ class CampaignsController extends Controller
     {
         $campaign = new Campaign();
         $campaign->fill($this->campaignAttributesFrom($request));
-        $status = 'success';
         $action = 'Created';
 
         $campaign->addAttachments($request->input('attached_files', []));
@@ -125,7 +123,7 @@ class CampaignsController extends Controller
             $this->dispatch(new SendCampaign($campaign));
         }
 
-        session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
+        session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
 
         return redirect()->route('epistolary::campaigns.index');
     }
@@ -144,19 +142,6 @@ class CampaignsController extends Controller
         session()->flash('success', sprintf('Deleted campaign %s', $campaign->name));
 
         return redirect()->route('epistolary::campaigns.index');
-    }
-
-    /**
-     * Send the campaign rite nao!
-     *
-     * @param \Pilaster\Epistolary\Campaign $campaign
-     * @return \Pilaster\Epistolary\Campaign
-     */
-    private function sendCampaign(Campaign $campaign)
-    {
-        // TODO: Send campaign now
-
-        return $campaign;
     }
 
     /**
