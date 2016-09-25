@@ -20,6 +20,10 @@ class CreateNewsletterSubscriptionsTable extends Migration
             $table->timestamp('opted_in_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('subscriber_id')
+                ->references('id')->on('newsletter_subscribers')
+                ->onDelete('cascade');
         });
     }
 

@@ -33,12 +33,18 @@ class SendCampaign extends Job implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
-        $mailer->send('epistolary::emails.default', ['campaign' => $this->campaign], function (Message $message) {
-            $message->to($this->getMessageToList());
-            $message->subject($this->campaign->subject);
-            $this->setMessageFrom($message);
-            $this->setMessageAttachments($message);
-        });
+        $recipients = $this->getMessageRecipients();
+
+        if (count($recipients) > 0) {
+            // Send it!
+            $mailer->send('epistolary::emails.default', ['campaign' => $this->campaign],
+                function (Message $message) use ($recipients) {
+                    $message->to($recipients);
+                    $message->subject($this->campaign->subject);
+                    $this->setMessageSender($message);
+                    $this->setMessageAttachments($message);
+                });
+        }
 
         $this->campaign->markAsSent();
 
@@ -50,7 +56,7 @@ class SendCampaign extends Job implements ShouldQueue
      *
      * @return array
      */
-    private function getMessageToList()
+    private function getMessageRecipients()
     {
         return $this->campaign->mailingList->getCurrentSubscriptions()->reject(function ($subscription) {
             return empty($subscription->subscriber);
@@ -65,7 +71,7 @@ class SendCampaign extends Job implements ShouldQueue
      *
      * @param \Illuminate\Mail\Message $message
      */
-    private function setMessageFrom(Message $message)
+    private function setMessageSender(Message $message)
     {
         if ($this->campaign->mailingList->from_email) {
             $message->from($this->campaign->mailingList->from_email, $this->campaign->mailingList->from_name);

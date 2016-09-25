@@ -9,12 +9,16 @@
       <th>List Name</th>
       <th>Subscribers</th>
       <th>Campaigns</th>
+      <th></th>
     </tr>
     @foreach ($lists as $list)
       <tr>
         <td><a href="{{ route('epistolary::lists.show', [$list->slug]) }}">{{ $list->name }}</a></td>
         <td>{{ $list->subscriptions()->count() }}</td>
         <td>{{ $list->campaigns()->count() }}</td>
+        <td class="list-action-cell text-center">
+          <a href="{{ route('epistolary::lists.edit', [$list->id]) }}" class="btn btn-default btn-xs" title="Edit"><i class="fa fa-edit"></i></a>
+        </td>
       </tr>
     @endforeach
   </table>

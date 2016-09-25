@@ -141,6 +141,7 @@ class Campaign extends Model
     {
         $this->is_sent = true;
         $this->sent_at = Carbon::now();
+        $this->sent_count = $this->mailingList->getCurrentSubscriptions()->count();
         $this->save();
     }
 }

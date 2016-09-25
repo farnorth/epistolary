@@ -17,6 +17,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th class="text-center">Subscriptions</th>
+                <th></th>
             </tr>
             @foreach ($subscribers as $subscriber)
                 <tr>
@@ -28,6 +29,13 @@
                     <td>{{ $subscriber->first_name }}</td>
                     <td>{{ $subscriber->last_name }}</td>
                     <td class="text-center">{{ $subscriber->subscriptions()->count() }}</td>
+                    <td class="susbcriber-action-cell text-center">
+                        <form action="{{ route('epistolary::subscribers.destroy', [$subscriber->id]) }}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-default btn-xs confirm-delete" title="Delete"><i class="fa fa-trash text-default"></i></button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </table>

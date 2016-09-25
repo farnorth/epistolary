@@ -70,7 +70,9 @@ class ListsController extends Controller
      */
     public function create()
     {
-        return view('epistolary::lists.create');
+        $list = new MailingList();
+
+        return view('epistolary::lists.create', compact('list'));
     }
 
     /**

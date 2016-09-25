@@ -26,6 +26,14 @@ $router->post('newsletters/lists', [
     'uses' => 'ListsController@store',
     'as' => 'lists.store',
 ]);
+$router->get('newsletters/lists/{list_id}/edit', [
+    'uses' => 'ListsController@edit',
+    'as' => 'lists.edit'
+]);
+$router->put('newsletters/lists/{list_id}', [
+    'uses' => 'ListsController@update',
+    'as' => 'lists.update'
+]);
 $router->get('newsletters/lists/{list_id}', [
     'uses' => 'ListsController@show',
     'as' => 'lists.show',
@@ -58,6 +66,10 @@ $router->put('newsletters/campaigns/{campaign_id}', [
     'uses' => 'CampaignsController@update',
     'as' => 'campaigns.update'
 ]);
+$router->delete('newsletters/campaigns/{campaign_id}', [
+    'uses' => 'CampaignsController@destroy',
+    'as' => 'campaigns.destroy',
+]);
 
 // ----------------------------------------------------------------------------------------
 // Subscribers
@@ -85,6 +97,10 @@ $router->get('newsletters/subscribers/{subscriber_id}', [
 $router->put('newsletters/subscribers/{subscriber_id}', [
     'uses' => 'SubscribersController@update',
     'as' => 'subscribers.update'
+]);
+$router->delete('newsletters/subscribers/{subscriber_id}', [
+    'uses' => 'SubscribersController@destroy',
+    'as' => 'subscribers.destroy',
 ]);
 
 // ----------------------------------------------------------------------------------------

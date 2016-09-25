@@ -38,4 +38,12 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js" integrity="sha256-I8vGZkA2jL0PptxyJBvewDVqNXcgIhcgeqi+GD/aw34=" crossorigin="anonymous"></script>
   <!-- dropzone -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js" integrity="sha256-p2l8VeL3iL1J0NxcXbEVtoyYSC+VbEbre5KHbzq1fq8=" crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function(){
+      $('.confirm-delete').click(function(event) {
+        return confirm('Are you sure you want to delete that? This cannot be undone.');
+      });
+    });
+  </script>
 @endsection

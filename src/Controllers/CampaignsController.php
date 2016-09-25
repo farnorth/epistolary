@@ -72,8 +72,8 @@ class CampaignsController extends Controller
 
         // Is the campaign being sent now?
         if ($request->has('send_now')) {
-            $action = 'Queued';
             $this->dispatch(new SendCampaign($campaign));
+            $action = 'Queued';
         }
 
         session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
@@ -119,8 +119,8 @@ class CampaignsController extends Controller
 
         // Is the campaign being sent now?
         if ($request->has('send_now')) {
-            $action = 'Queued';
             $this->dispatch(new SendCampaign($campaign));
+            $action = 'Queued';
         }
 
         session()->flash('success', sprintf('%s campaign %s', $action, $campaign->name));
