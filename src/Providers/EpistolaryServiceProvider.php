@@ -16,6 +16,7 @@ class EpistolaryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/epistolary.php', 'epistolary');
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**

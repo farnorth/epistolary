@@ -5,6 +5,7 @@ namespace Pilaster\Epistolary\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Pilaster\Epistolary\Campaign;
+use Pilaster\Epistolary\Jobs\SendCampaign;
 use Pilaster\Epistolary\MailingList;
 use Pilaster\Epistolary\Requests\CampaignRequest;
 
@@ -72,11 +73,8 @@ class CampaignsController extends Controller
 
         // Is the campaign being sent now?
         if ($request->has('send_now')) {
-            $action = 'Sent';
-            if (!$campaign->send()) {
-                $status = 'error';
-                $action = 'Could not send';
-            }
+            $action = 'Queued';
+            $this->dispatch(new SendCampaign($campaign));
         }
 
         session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
@@ -108,7 +106,8 @@ class CampaignsController extends Controller
      */
     public function store(CampaignRequest $request)
     {
-        $campaign = new Campaign($this->campaignAttributesFrom($request));
+        $campaign = new Campaign();
+        $campaign->fill($this->campaignAttributesFrom($request));
         $status = 'success';
         $action = 'Created';
 
@@ -122,10 +121,8 @@ class CampaignsController extends Controller
 
         // Is the campaign being sent now?
         if ($request->has('send_now')) {
-            $action = 'Sent';
-            if (!$campaign->send()) {
-                $status = 'error';
-            }
+            $action = 'Queued';
+            $this->dispatch(new SendCampaign($campaign));
         }
 
         session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
@@ -171,8 +168,8 @@ class CampaignsController extends Controller
     private function campaignAttributesFrom(Request $request)
     {
         return [
-            'list_id' => $request->input('list_id'),
             'name' => $request->input('name'),
+            'list_id' => $request->input('list_id'),
             'subject' => $request->input('subject'),
             'description' => $request->input('description'),
             'is_scheduled' => (bool) $request->input('is_scheduled', false),

@@ -2,16 +2,16 @@
 
 @section('content')
   <!-- navigation -->
-  <section>
+  <section class="newsletter-nav">
     @include('epistolary::partials.nav-bar')
   </section>
   <!-- alerts -->
-  <section class="alerts-wrapper">
-    @include('epistolary::partials.alerts')
+  <section class="newsletter-alerts container">
+      @include('epistolary::partials.alerts')
   </section>
   <!-- Main content -->
-  <section class="container">
-        @yield('newsletter-content')
+  <section class="newsletter-content container">
+      @yield('newsletter-content')
   </section>
 @endsection
 

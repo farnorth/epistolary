@@ -5,6 +5,7 @@ namespace Pilaster\Epistolary;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
+use Pilaster\Epistolary\Events\CampaignSent;
 
 /**
  * Class Newsletter
@@ -95,49 +96,6 @@ class MailingList extends Model
     public function subscribers()
     {
         return $this->hasManyThrough(Subscriber::class, Subscription::class);
-    }
-
-    /**
-     * Send a campaign to its subscribers.
-     *
-     * @param \Pilaster\Epistolary\Campaign $campaign
-     * @return bool
-     */
-    public function sendCampaign(Campaign $campaign)
-    {
-        $to = $this->getMessageToList();
-
-        if (empty($to)) {
-            return false;
-        }
-
-        Mail::send('epistolary::emails.default', ['campaign' => $campaign], function (Message $message) use ($to, $campaign) {
-            $message->to($to);
-            $message->subject($campaign->subject);
-            collect($campaign->attachments)->each(function ($attachment) use ($message, $campaign) {
-                $message->attach($campaign->attachmentPath($attachment));
-            });
-            if ($this->from_email) {
-                $message->from($this->from_email, $this->from_name);
-            }
-        });
-
-        return true;
-    }
-
-    /**
-     * Get an array of subscribers for the Message::to() method.
-     *
-     * @return array
-     */
-    public function getMessageToList()
-    {
-        return $this->getCurrentSubscriptions()->reject(function ($subscription) {
-            return empty($subscription->subscriber);
-        })->flatMap(function ($subscription) {
-            $subscriber = $subscription->subscriber;
-            return [$subscriber->email => trim($subscriber->first_name.' '.$subscriber->last_name)];
-        })->toArray();
     }
 
     /**

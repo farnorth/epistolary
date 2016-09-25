@@ -2,6 +2,7 @@
 
 namespace Pilaster\Epistolary;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,7 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $scheduled_for
  * @property boolean $is_sent
  * @property \Carbon\Carbon $sent_at
- * @property \Illuminate\Database\Eloquent\Model $mailingList
+ * @property int $sent_count
+ * @property MailingList $mailingList
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
@@ -53,6 +55,7 @@ class Campaign extends Model
         'list_id' => 'integer',
         'is_scheduled' => 'boolean',
         'is_sent' => 'boolean',
+        'sent_count' => 'integer',
         'attachments' => 'json',
     ];
 
@@ -62,6 +65,49 @@ class Campaign extends Model
     public function mailingList()
     {
         return $this->belongsTo(MailingList::class, 'list_id');
+    }
+
+    /**
+     * Set the name attributes, and ensure it is not a duplicate.
+     *
+     * @param string $value
+     */
+    public function setNameAttribute($value)
+    {
+        if (!isset($this->attributes['name']) || $this->attributes['name'] != $value) {
+            $this->attributes['name'] = $this->getNonDuplicateName($value);
+        }
+    }
+
+    /**
+     * Get a name that is not a duplicate of an existing name.
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getNonDuplicateName($name)
+    {
+        $exists = self::nameExists($name);
+
+        while ($exists) {
+            preg_match('/^(?P<name>.+?)(?P<copy>\s+copy\s+(?P<num>\d+))?$/i', $name, $matches);
+            $num = isset($matches['num']) ? $matches['num']+1 : 1;
+            $name = sprintf('%s copy %d', $matches['name'], $num);
+            $exists = self::nameExists($name);
+        }
+
+        return $name;
+    }
+
+    /**
+     * Determine whether or not a name already exists.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public static function nameExists($name)
+    {
+        return static::where('name', $name)->exists();
     }
 
     /**
@@ -77,13 +123,24 @@ class Campaign extends Model
         return $this;
     }
 
+    /**
+     * Get the full attachment path, optionally including the file name.
+     *
+     * @param string $attachment
+     * @return string
+     */
     public function attachmentPath($attachment = null)
     {
         return sprintf('%s/%s', config('epistolary.attachments.storage'), $attachment);
     }
 
-    public function send()
+    /**
+     * Mark a campaign as sent.
+     */
+    public function markAsSent()
     {
-        return $this->mailingList->sendCampaign($this);
+        $this->is_sent = true;
+        $this->sent_at = Carbon::now();
+        $this->save();
     }
 }
