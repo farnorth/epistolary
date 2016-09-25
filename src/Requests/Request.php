@@ -1,6 +1,6 @@
 <?php
 
-namespace Pilaster\Newsletters\Requests;
+namespace Pilaster\Epistolary\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

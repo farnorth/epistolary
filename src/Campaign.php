@@ -1,6 +1,6 @@
 <?php
 
-namespace Pilaster\Newsletters;
+namespace Pilaster\Epistolary;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -78,7 +78,7 @@ class Campaign extends Model
 
     public function attachmentPath($attachment = null)
     {
-        return sprintf('%s/%s', config('newsletters.attachments.path'), $attachment);
+        return sprintf('%s/%s', config('epistolary.attachments.storage'), $attachment);
     }
 
     public function send()

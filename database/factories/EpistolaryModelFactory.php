@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(Pilaster\Newsletters\MailingList::class, function (Faker\Generator $faker) {
+$factory->define(Pilaster\Epistolary\MailingList::class, function (Faker\Generator $faker) {
     $name = $faker->bs;
     return [
         'name' => $name,
@@ -23,7 +23,7 @@ $factory->define(Pilaster\Newsletters\MailingList::class, function (Faker\Genera
     ];
 });
 
-$factory->define(Pilaster\Newsletters\Campaign::class, function (Faker\Generator $faker) {
+$factory->define(Pilaster\Epistolary\Campaign::class, function (Faker\Generator $faker) {
     $sent_at = $faker->randomElement([
         $faker->dateTimeBetween('-10 days', 'now')->getTimestamp(),
         null
@@ -43,7 +43,7 @@ $factory->define(Pilaster\Newsletters\Campaign::class, function (Faker\Generator
     ];
 });
 
-$factory->define(Pilaster\Newsletters\Subscriber::class, function (Faker\Generator $faker) {
+$factory->define(Pilaster\Epistolary\Subscriber::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
@@ -51,7 +51,7 @@ $factory->define(Pilaster\Newsletters\Subscriber::class, function (Faker\Generat
     ];
 });
 
-$factory->define(Pilaster\Newsletters\Subscription::class, function (Faker\Generator $faker) {
+$factory->define(Pilaster\Epistolary\Subscription::class, function (Faker\Generator $faker) {
     $deleted_at = $faker->randomElement([
         $faker->dateTimeBetween('-10 days', 'now')->getTimestamp(),
         null

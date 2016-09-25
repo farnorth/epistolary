@@ -11,6 +11,6 @@ class NewsletterListsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\Pilaster\Newsletters\MailingList::class, 5)->create();
+        factory(\Pilaster\Epistolary\MailingList::class, 5)->create();
     }
 }

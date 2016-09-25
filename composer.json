@@ -1,5 +1,5 @@
 {
-    "name": "pilaster/newsletters",
+    "name": "pilaster/epistolary",
     "description": "Laravel Newsletter Management",
     "license": "Apache-2.0",
     "authors": [
@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pilaster\\Newsletters\\": "src/"
+            "Pilaster\\Epistolary\\": "src/"
         }
     },
     "autoload-dev": {

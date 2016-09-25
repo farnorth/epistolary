@@ -1,6 +1,6 @@
 <?php
 
-namespace Pilaster\Newsletters;
+namespace Pilaster\Epistolary;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Message;
@@ -62,7 +62,7 @@ class MailingList extends Model
      * Get a list by its ID or slug.
      *
      * @param int|string $list
-     * @return \Pilaster\Newsletters\MailingList
+     * @return \Pilaster\Epistolary\MailingList
      */
     public static function getList($list)
     {
@@ -100,7 +100,7 @@ class MailingList extends Model
     /**
      * Send a campaign to its subscribers.
      *
-     * @param \Pilaster\Newsletters\Campaign $campaign
+     * @param \Pilaster\Epistolary\Campaign $campaign
      * @return bool
      */
     public function sendCampaign(Campaign $campaign)
@@ -111,7 +111,7 @@ class MailingList extends Model
             return false;
         }
 
-        Mail::send('newsletters::emails.default', ['campaign' => $campaign], function (Message $message) use ($to, $campaign) {
+        Mail::send('epistolary::emails.default', ['campaign' => $campaign], function (Message $message) use ($to, $campaign) {
             $message->to($to);
             if ($this->from_email) {
                 $message->from($this->from_email, $this->from_name);

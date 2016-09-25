@@ -1,4 +1,4 @@
-# Newsletters
+# Epistolary
 
 Manage your newsletters and subscribers in an existing Laravel application
 
@@ -8,13 +8,13 @@ Manage your newsletters and subscribers in an existing Laravel application
 Composer
 
 ```bash
-composer require pilaster/newsletters
+composer require pilaster/epistolary
 ```
 
 and then add this to `config/app.php`:
 
 ```php
-Pilaster\Newsletters\Providers\NewsletterServiceProvider::class,
+Pilaster\Epistolary\Providers\EpistolaryServiceProvider::class,
 ```
 
 ### Optional Additional Setup
@@ -22,7 +22,7 @@ Pilaster\Newsletters\Providers\NewsletterServiceProvider::class,
 To publish all of the file groups (config/views/migrations/etc.) do:
 
 ```bash
-php artisan vendor:publish --provider="Pilaster\Newsletters\Providers\NewsletterServiceProvider"
+php artisan vendor:publish --provider="Pilaster\Epistolary\Providers\EpistolaryServiceProvider"
 ```
 
 You can specify only certain file groups by adding the `--tag` option:

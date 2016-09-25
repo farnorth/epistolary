@@ -11,13 +11,13 @@ class NewsletterSubscribersTableSeeder extends Seeder
      */
     public function run()
     {
-        $lists = \Pilaster\Newsletters\MailingList::all();
+        $lists = \Pilaster\Epistolary\MailingList::all();
         if ($lists->isEmpty()) {
-            $lists = factory(\Pilaster\Newsletters\MailingList::class, 5)->create();
+            $lists = factory(\Pilaster\Epistolary\MailingList::class, 5)->create();
         }
 
-        factory(\Pilaster\Newsletters\Subscriber::class, 50)->create()->each(function ($subscriber)  use ($lists) {
-            factory(\Pilaster\Newsletters\Subscription::class, 2)->create(['subscriber_id' => $subscriber->id]);
+        factory(\Pilaster\Epistolary\Subscriber::class, 50)->create()->each(function ($subscriber)  use ($lists) {
+            factory(\Pilaster\Epistolary\Subscription::class, 2)->create(['subscriber_id' => $subscriber->id]);
         });
     }
 }

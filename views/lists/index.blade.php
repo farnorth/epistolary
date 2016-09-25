@@ -1,4 +1,4 @@
-@extends('newsletters::layout')
+@extends('epistolary::layout')
 
 @section('content')
   <h1>Lists</h1>
@@ -12,7 +12,7 @@
     </tr>
     @foreach ($lists as $list)
       <tr>
-        <td><a href="{{ route('newsletters::lists.show', [$list->slug]) }}">{{ $list->name }}</a></td>
+        <td><a href="{{ route('epistolary::lists.show', [$list->slug]) }}">{{ $list->name }}</a></td>
         <td>{{ $list->subscriptions()->count() }}</td>
         <td>{{ $list->campaigns()->count() }}</td>
       </tr>
@@ -22,6 +22,6 @@
     <h5><em>Add a list now!</em></h5>
   @endif
 
-  <a class="btn btn-primary" href="{{ route('newsletters::lists.create') }}">Add a new list</a>
+  <a class="btn btn-primary" href="{{ route('epistolary::lists.create') }}">Add a new list</a>
 
 @endsection

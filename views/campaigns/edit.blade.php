@@ -1,13 +1,13 @@
-@extends('newsletters::layout')
+@extends('epistolary::layout')
 
 @section('content')
   <h1>{{ $campaign->name }}</h1>
 
-  <form action="{{ route('newsletters::campaigns.update', [$campaign->id]) }}" method="POST">
+  <form action="{{ route('epistolary::campaigns.update', [$campaign->id]) }}" method="POST">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
 
-    @include('newsletters::campaigns.form')
+    @include('epistolary::campaigns.form')
 
   </form>
 @endsection

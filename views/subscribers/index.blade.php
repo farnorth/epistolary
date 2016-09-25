@@ -1,4 +1,4 @@
-@extends('newsletters::layout')
+@extends('epistolary::layout')
 
 @section('content')
     <h1>Subscribers</h1>
@@ -21,7 +21,7 @@
             @foreach ($subscribers as $subscriber)
                 <tr>
                     <td>
-                        <a href="{{ route('newsletters::subscribers.edit', [$subscriber->id]) }}">
+                        <a href="{{ route('epistolary::subscribers.edit', [$subscriber->id]) }}">
                             {{ $subscriber->email }}
                         </a>
                     </td>
@@ -40,6 +40,6 @@
         <h5><em>Add your first subscriber now!</em></h5>
     @endif
 
-    <a href="{{ route('newsletters::subscribers.create') }}" class="btn btn-primary">Add New Subscriber</a>
+    <a href="{{ route('epistolary::subscribers.create') }}" class="btn btn-primary">Add New Subscriber</a>
 
 @endsection

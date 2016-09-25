@@ -40,5 +40,5 @@
 <!-- SUBMIT OR CANCEL -->
 <div class="form-group">
     <button type="submit" id="save-subscriber" class="btn btn-primary">Save</button>
-    <a href="{{ route('newsletters::subscribers.index') }}" class="btn btn-default">Cancel</a>
+    <a href="{{ route('epistolary::subscribers.index') }}" class="btn btn-default">Cancel</a>
 </div>

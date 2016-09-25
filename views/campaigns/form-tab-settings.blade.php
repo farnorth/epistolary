@@ -89,7 +89,7 @@
 
         $(document).ready(function(){
             $("#dropzone-attachments").dropzone({
-                url: "{{ route('newsletters.api::attachments.store') }}",
+                url: "{{ route('epistolary.api::attachments.store') }}",
                 sending: function(file, xhr, formData){
                     var file_name = getFilename();
                     if (file_name) formData.append("file_name", file_name);

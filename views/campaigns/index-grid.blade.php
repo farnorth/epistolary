@@ -9,7 +9,7 @@
     <div class="col-md-4 col-md-offset-8">
         <select name="filterBy" class="form-control" title="Filter by List">
             <option value>Filter by Mailing List</option>
-            @foreach (Pilaster\Newsletters\MailingList::get(['name', 'id']) as $list)
+            @foreach (Pilaster\Epistolary\MailingList::get(['name', 'id']) as $list)
                 <option value="{{ $list->id }}">{{ $list->name }}</option>
             @endforeach
         </select>
@@ -29,9 +29,9 @@
     <tr>
         <td>
             @if ($campaign->is_sent)
-            <a href="{{ route('newsletters::campaigns.show', [$campaign->id]) }}">{{ $campaign->name }}</a>
+            <a href="{{ route('epistolary::campaigns.show', [$campaign->id]) }}">{{ $campaign->name }}</a>
             @else
-            <a href="{{ route('newsletters::campaigns.edit', [$campaign->id]) }}">{{ $campaign->name }}</a>
+            <a href="{{ route('epistolary::campaigns.edit', [$campaign->id]) }}">{{ $campaign->name }}</a>
             @endif
         </td>
         <td>{{ $campaign->mailingList->name }}</td>

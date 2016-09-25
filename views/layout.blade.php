@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Newsletters - @yield('title')</title>
+    <title>Epistolary - @yield('title')</title>
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -22,13 +22,13 @@
   <body>
 
     <section>
-      @include('newsletters::partials.nav-bar')
+      @include('epistolary::partials.nav-bar')
     </section>
 
     <!-- Main content -->
     <section>
       <div class="container">
-        @include('newsletters::partials.alerts')
+        @include('epistolary::partials.alerts')
 
         @yield('content')
       </div>

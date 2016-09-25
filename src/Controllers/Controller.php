@@ -1,6 +1,6 @@
 <?php
 
-namespace Pilaster\Newsletters\Controllers;
+namespace Pilaster\Epistolary\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;

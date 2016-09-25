@@ -11,6 +11,6 @@ class NewsletterCampaignsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\Pilaster\Newsletters\Campaign::class, 25)->create();
+        factory(\Pilaster\Epistolary\Campaign::class, 25)->create();
     }
 }

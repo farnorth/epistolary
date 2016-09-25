@@ -1,13 +1,13 @@
 <?php
 
-namespace Pilaster\Newsletters\Controllers;
+namespace Pilaster\Epistolary\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Pilaster\Newsletters\Requests\SubscriberRequest;
-use Pilaster\Newsletters\Subscriber;
-use Pilaster\Newsletters\MailingList;
-use Pilaster\Newsletters\Subscription;
+use Pilaster\Epistolary\Requests\SubscriberRequest;
+use Pilaster\Epistolary\Subscriber;
+use Pilaster\Epistolary\MailingList;
+use Pilaster\Epistolary\Subscription;
 
 class SubscribersController extends Controller
 {
@@ -21,7 +21,7 @@ class SubscribersController extends Controller
     {
         $subscribers = $this->paginateModel(Subscriber::class, $request);
 
-        return view('newsletters::subscribers.index', compact('subscribers'));
+        return view('epistolary::subscribers.index', compact('subscribers'));
     }
 
     /**
@@ -34,7 +34,7 @@ class SubscribersController extends Controller
     {
         $subscriber = Subscriber::find($subscriber_id);
 
-        return view('newsletters::subscribers.show', compact('subscriber'));
+        return view('epistolary::subscribers.show', compact('subscriber'));
     }
 
     /**
@@ -49,13 +49,13 @@ class SubscribersController extends Controller
         $subscriber->load('subscriptions');
         $lists = MailingList::all();
 
-        return view('newsletters::subscribers.edit', compact('subscriber', 'lists'));
+        return view('epistolary::subscribers.edit', compact('subscriber', 'lists'));
     }
 
     /**
      * Update a subscriber.
      *
-     * @param \Pilaster\Newsletters\Requests\SubscriberRequest $request
+     * @param \Pilaster\Epistolary\Requests\SubscriberRequest $request
      * @param int|string $subscriber_id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -67,7 +67,7 @@ class SubscribersController extends Controller
 
         session()->flash('success', sprintf('Updated subscriber %s', $subscriber->email));
 
-        return redirect()->route('newsletters::subscribers.index');
+        return redirect()->route('epistolary::subscribers.index');
     }
 
     /**
@@ -81,13 +81,13 @@ class SubscribersController extends Controller
         $subscriber = new Subscriber();
         $lists = MailingList::all();
 
-        return view('newsletters::subscribers.create', compact('subscriber', 'lists'));
+        return view('epistolary::subscribers.create', compact('subscriber', 'lists'));
     }
 
     /**
      * Save a newly created subscriber to the database.
      *
-     * @param \Pilaster\Newsletters\Requests\SubscriberRequest $request
+     * @param \Pilaster\Epistolary\Requests\SubscriberRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(SubscriberRequest $request)
@@ -97,7 +97,7 @@ class SubscribersController extends Controller
 
         session()->flash('success', sprintf('Created subscriber %s', $subscriber->email));
 
-        return redirect()->route('newsletters::subscribers.index');
+        return redirect()->route('epistolary::subscribers.index');
     }
 
     /**
@@ -113,7 +113,7 @@ class SubscribersController extends Controller
 
         session()->flash('success', sprintf('Deleted subscriber %s', $subscriber->name));
 
-        return redirect()->route('newsletters::subscribers.index');
+        return redirect()->route('epistolary::subscribers.index');
     }
 
     /**

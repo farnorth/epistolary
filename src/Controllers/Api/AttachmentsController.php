@@ -1,9 +1,9 @@
 <?php
 
-namespace Pilaster\Newsletters\Controllers\Api;
+namespace Pilaster\Epistolary\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Pilaster\Newsletters\Controllers\Controller;
+use Pilaster\Epistolary\Controllers\Controller;
 use Ramsey\Uuid\Uuid;
 
 class AttachmentsController extends Controller
@@ -20,7 +20,7 @@ class AttachmentsController extends Controller
             return response()->json(['error' => 'no file...'], 400);
         }
 
-        $path = config('newsletters.attachments.path');
+        $path = config('epistolary.attachments.storage');
         $name_prefix = $request->input('file_name', 'newsletter-attachment');
         $uuid = base64_encode(Uuid::uuid4());
         $name_extension = $file->getClientOriginalExtension();

@@ -1,9 +1,9 @@
 <?php
 
-namespace Pilaster\Newsletters\Controllers;
+namespace Pilaster\Epistolary\Controllers;
 
 use Illuminate\Http\Request;
-use Pilaster\Newsletters\MailingList;
+use Pilaster\Epistolary\MailingList;
 
 class ListsController extends Controller
 {
@@ -16,7 +16,7 @@ class ListsController extends Controller
     {
         $lists = MailingList::all();
 
-        return view('newsletters::lists.index', compact('lists'));
+        return view('epistolary::lists.index', compact('lists'));
     }
 
     /**
@@ -30,7 +30,7 @@ class ListsController extends Controller
         $list = $this->getList($list_id);
         $list->load('campaigns');
 
-        return view('newsletters::lists.show', compact('list'));
+        return view('epistolary::lists.show', compact('list'));
     }
 
     /**
@@ -43,7 +43,7 @@ class ListsController extends Controller
     {
         $list = $this->getList($list_id);
 
-        return view('newsletters::lists.edit', compact('list'));
+        return view('epistolary::lists.edit', compact('list'));
     }
 
     /**
@@ -60,7 +60,7 @@ class ListsController extends Controller
 
         session()->flash('success', sprintf('Updated list %s', $list->name));
 
-        return redirect()->route('newsletters::lists.index');
+        return redirect()->route('epistolary::lists.index');
     }
 
     /**
@@ -70,7 +70,7 @@ class ListsController extends Controller
      */
     public function create()
     {
-        return view('newsletters::lists.create');
+        return view('epistolary::lists.create');
     }
 
     /**
@@ -86,7 +86,7 @@ class ListsController extends Controller
 
         session()->flash('success', sprintf('Created list %s', $list->name));
 
-        return redirect()->route('newsletters::lists.index');
+        return redirect()->route('epistolary::lists.index');
     }
 
     /**
@@ -102,14 +102,14 @@ class ListsController extends Controller
 
         session()->flash('success', sprintf('Deleted newsletter %s', $list->name));
 
-        return redirect()->route('newsletters::lists.index');
+        return redirect()->route('epistolary::lists.index');
     }
 
     /**
      * Get a newsletter by its ID or slug.
      *
      * @param int|string $list
-     * @return \Pilaster\Newsletters\MailingList
+     * @return \Pilaster\Epistolary\MailingList
      */
     private function getList($list)
     {

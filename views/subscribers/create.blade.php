@@ -1,12 +1,12 @@
-@extends('newsletters::layout')
+@extends('epistolary::layout')
 
 @section('content')
   <h1>Add a new subscriber</h1>
 
-  <form action="{{ route('newsletters::subscribers.store') }}" method="POST">
+  <form action="{{ route('epistolary::subscribers.store') }}" method="POST">
     {{ csrf_field() }}
 
-    @include('newsletters::subscribers.form')
+    @include('epistolary::subscribers.form')
 
   </form>
 @endsection

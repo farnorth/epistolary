@@ -1,12 +1,12 @@
 <?php
 
-namespace Pilaster\Newsletters\Controllers;
+namespace Pilaster\Epistolary\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Pilaster\Newsletters\Campaign;
-use Pilaster\Newsletters\MailingList;
-use Pilaster\Newsletters\Requests\CampaignRequest;
+use Pilaster\Epistolary\Campaign;
+use Pilaster\Epistolary\MailingList;
+use Pilaster\Epistolary\Requests\CampaignRequest;
 
 class CampaignsController extends Controller
 {
@@ -20,7 +20,7 @@ class CampaignsController extends Controller
     {
         $campaigns = $this->paginateModel(Campaign::class, $request);
 
-        return view('newsletters::campaigns.index', compact('campaigns'));
+        return view('epistolary::campaigns.index', compact('campaigns'));
     }
 
     /**
@@ -33,7 +33,7 @@ class CampaignsController extends Controller
     {
         $campaign = Campaign::find($campaign_id);
 
-        return view('newsletters::campaigns.show', compact('campaign'));
+        return view('epistolary::campaigns.show', compact('campaign'));
     }
 
     /**
@@ -48,13 +48,13 @@ class CampaignsController extends Controller
         $lists = MailingList::all();
         $default_time = $this->getDefaultTime($campaign);
 
-        return view('newsletters::campaigns.edit', compact('campaign', 'lists', 'default_time'));
+        return view('epistolary::campaigns.edit', compact('campaign', 'lists', 'default_time'));
     }
 
     /**
      * Update a campaign.
      *
-     * @param \Pilaster\Newsletters\Requests\CampaignRequest $request
+     * @param \Pilaster\Epistolary\Requests\CampaignRequest $request
      * @param int|string $campaign_id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -81,7 +81,7 @@ class CampaignsController extends Controller
 
         session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
 
-        return redirect()->route('newsletters::campaigns.index');
+        return redirect()->route('epistolary::campaigns.index');
     }
 
     /**
@@ -97,13 +97,13 @@ class CampaignsController extends Controller
         $lists = MailingList::all();
         $default_time =  $this->getDefaultTime($campaign);
 
-        return view('newsletters::campaigns.create', compact('campaign', 'lists', 'default_time'));
+        return view('epistolary::campaigns.create', compact('campaign', 'lists', 'default_time'));
     }
 
     /**
      * Save a newly created campaign to the database.
      *
-     * @param \Pilaster\Newsletters\Requests\CampaignRequest $request
+     * @param \Pilaster\Epistolary\Requests\CampaignRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CampaignRequest $request)
@@ -130,7 +130,7 @@ class CampaignsController extends Controller
 
         session()->flash($status, sprintf('%s campaign %s', $action, $campaign->name));
 
-        return redirect()->route('newsletters::campaigns.index');
+        return redirect()->route('epistolary::campaigns.index');
     }
 
     /**
@@ -146,14 +146,14 @@ class CampaignsController extends Controller
 
         session()->flash('success', sprintf('Deleted campaign %s', $campaign->name));
 
-        return redirect()->route('newsletters::campaigns.index');
+        return redirect()->route('epistolary::campaigns.index');
     }
 
     /**
      * Send the campaign rite nao!
      *
-     * @param \Pilaster\Newsletters\Campaign $campaign
-     * @return \Pilaster\Newsletters\Campaign
+     * @param \Pilaster\Epistolary\Campaign $campaign
+     * @return \Pilaster\Epistolary\Campaign
      */
     private function sendCampaign(Campaign $campaign)
     {
@@ -177,13 +177,14 @@ class CampaignsController extends Controller
             'description' => $request->input('description'),
             'is_scheduled' => (bool) $request->input('is_scheduled', false),
             'scheduled_for' => $request->input('scheduled_for') ? new Carbon($request->input('scheduled_for')) : null,
+            'attachments' => $request->input('attached_files'),
         ];
     }
 
     /**
      * Get the default time timestamp to set the schedule to.
      *
-     * @param \Pilaster\Newsletters\Campaign $campaign
+     * @param \Pilaster\Epistolary\Campaign $campaign
      * @return int
      */
     private function getDefaultTime(Campaign $campaign)

@@ -11,18 +11,18 @@
         <!-- DETAILS TAB -->
         <div role="tabpanel" class="tab-pane active" id="settings">
             <br>
-            @include('newsletters::campaigns.form-tab-settings')
+            @include('epistolary::campaigns.form-tab-settings')
         </div>
         <!-- TEMPLATE TAB -->
         {{--
         <div role="tabpanel" class="tab-pane" id="template">
             <br>
-            @include('newsletters::campaigns.form-tab-template')
+            @include('epistolary::campaigns.form-tab-template')
         </div>
         --}}
         <div role="tabpanel" class="tab-pane" id="schedule">
             <br>
-            @include('newsletters::campaigns.form-tab-schedule')
+            @include('epistolary::campaigns.form-tab-schedule')
         </div>
     </div>
 
@@ -34,7 +34,7 @@
     </button>
     {{--<input type="submit" name="schedule_now" value="Schedule" class="btn btn-success confirm-schedule">--}}
     <input type="submit" name="send_now" value="Send Now" class="btn btn-warning confirm-send">
-    <a href="{{ route('newsletters::campaigns.index') }}" class="btn btn-default">Cancel</a>
+    <a href="{{ route('epistolary::campaigns.index') }}" class="btn btn-default">Cancel</a>
 </div>
 
 @push('scripts')

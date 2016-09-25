@@ -1,9 +1,9 @@
-@extends('newsletters::layout')
+@extends('epistolary::layout')
 
 @section('content')
   <h1>Create a new list</h1>
 
-  <form action="{{ route('newsletters::lists.store') }}" method="POST">
+  <form action="{{ route('epistolary::lists.store') }}" method="POST">
     {{ csrf_field() }}
 
     <!-- NAME -->
@@ -46,7 +46,7 @@
     <!-- SUBMIT OR CANCEL -->
     <div class="form-group">
       <button type="submit" class="btn btn-success btn-lg">Add List</button>
-      <a href="{{ route('newsletters::lists.index') }}" class="btn btn-default">Cancel</a>
+      <a href="{{ route('epistolary::lists.index') }}" class="btn btn-default">Cancel</a>
     </div>
 
   </form>

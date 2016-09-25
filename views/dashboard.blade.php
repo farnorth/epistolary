@@ -1,5 +1,5 @@
-@extends('newsletters::layout')
+@extends('epistolary::layout')
 
 @section('content')
-  <h1>Newsletters Dashboard</h1>
+  <h1>Epistolary Dashboard</h1>
 @endsection

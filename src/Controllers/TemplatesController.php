@@ -1,10 +1,10 @@
 <?php
 
-namespace Pilaster\Newsletters\Controllers;
+namespace Pilaster\Epistolary\Controllers;
 
 use Illuminate\Http\Request;
-use Pilaster\Newsletters\Subscriber;
-use Pilaster\Newsletters\MailingList;
+use Pilaster\Epistolary\Subscriber;
+use Pilaster\Epistolary\MailingList;
 
 class TemplatesController extends Controller
 {
@@ -17,7 +17,7 @@ class TemplatesController extends Controller
     {
         $subscribers = Subscriber::all();
 
-        return view('newsletters::subscribers.index', compact('subscribers'));
+        return view('epistolary::subscribers.index', compact('subscribers'));
     }
 
     /**
@@ -30,7 +30,7 @@ class TemplatesController extends Controller
     {
         $subscriber = Subscriber::find($subscriber_id);
 
-        return view('newsletters::subscribers.show', compact('subscriber'));
+        return view('epistolary::subscribers.show', compact('subscriber'));
     }
 
     /**
@@ -43,7 +43,7 @@ class TemplatesController extends Controller
     {
         $subscriber = Subscriber::find($subscriber_id);
 
-        return view('newsletters::subscribers.edit', compact('subscriber'));
+        return view('epistolary::subscribers.edit', compact('subscriber'));
     }
 
     /**
@@ -60,7 +60,7 @@ class TemplatesController extends Controller
 
         session()->flash('success', sprintf('Updated subscriber %s', $subscriber->email));
 
-        return redirect()->route('newsletters::subscribers.index');
+        return redirect()->route('epistolary::subscribers.index');
     }
 
     /**
@@ -75,7 +75,7 @@ class TemplatesController extends Controller
         $list = $this->getList($request->input('list'));
         $for_list = $list ? $list->id : null;
 
-        return view('newsletters::subscribers.create', compact('lists', 'for_list'));
+        return view('epistolary::subscribers.create', compact('lists', 'for_list'));
     }
 
     /**
@@ -90,7 +90,7 @@ class TemplatesController extends Controller
 
         session()->flash('success', sprintf('Created subscriber %s', $subscriber->email));
 
-        return redirect()->route('newsletters::subscribers.index');
+        return redirect()->route('epistolary::subscribers.index');
     }
 
     /**
@@ -106,14 +106,14 @@ class TemplatesController extends Controller
 
         session()->flash('success', sprintf('Deleted subscriber %s', $subscriber->name));
 
-        return redirect()->route('newsletters::subscribers.index');
+        return redirect()->route('epistolary::subscribers.index');
     }
 
     /**
      * Get a mailing list by its ID or slug.
      *
      * @param int|string $list
-     * @return \Pilaster\Newsletters\MailingList
+     * @return \Pilaster\Epistolary\MailingList
      */
     private function getList($list)
     {

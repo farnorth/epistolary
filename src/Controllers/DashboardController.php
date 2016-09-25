@@ -1,8 +1,8 @@
 <?php
 
-namespace Pilaster\Newsletters\Controllers;
+namespace Pilaster\Epistolary\Controllers;
 
-use Pilaster\Newsletters\MailingList;
+use Pilaster\Epistolary\MailingList;
 
 class DashboardController extends Controller
 {
@@ -15,6 +15,6 @@ class DashboardController extends Controller
     {
         $lists = MailingList::with('campaigns')->get();
 
-        return view('newsletters::dashboard', compact('lists'));
+        return view('epistolary::dashboard', compact('lists'));
     }
 }

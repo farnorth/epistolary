@@ -1,6 +1,6 @@
 <?php
 
-namespace Pilaster\Newsletters\Requests;
+namespace Pilaster\Epistolary\Requests;
 
 class SubscriberRequest extends Request
 {

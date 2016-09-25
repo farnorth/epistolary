@@ -1,12 +1,12 @@
 <?php
 
-namespace Pilaster\Newsletters\Providers;
+namespace Pilaster\Epistolary\Providers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class NewsletterServiceProvider extends ServiceProvider
+class EpistolaryServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
@@ -15,7 +15,7 @@ class NewsletterServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/newsletters.php', 'newsletters');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/epistolary.php', 'epistolary');
     }
 
     /**
@@ -36,7 +36,7 @@ class NewsletterServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         }
 
-        $this->loadViewsFrom(__DIR__.'/../../views', 'newsletters');
+        $this->loadViewsFrom(__DIR__.'/../../views', 'epistolary');
 
         $this->registerPublishes();
 
@@ -49,8 +49,8 @@ class NewsletterServiceProvider extends ServiceProvider
     private function mapWebRoutes()
     {
         Route::group([
-            'as' => 'newsletters::',
-            'namespace' => 'Pilaster\Newsletters\Controllers',
+            'as' => 'epistolary::',
+            'namespace' => 'Pilaster\Epistolary\Controllers',
             'middleware' => ['web'],
         ], function ($router) {
             require __DIR__.'/../../routes/web.php';
@@ -63,8 +63,8 @@ class NewsletterServiceProvider extends ServiceProvider
     private function mapApiRoutes()
     {
         Route::group([
-            'as' => 'newsletters.api::',
-            'namespace' => 'Pilaster\Newsletters\Controllers\Api',
+            'as' => 'epistolary.api::',
+            'namespace' => 'Pilaster\Epistolary\Controllers\Api',
             'middleware' => ['api'],
         ], function ($router) {
             require __DIR__.'/../../routes/api.php';
@@ -76,7 +76,7 @@ class NewsletterServiceProvider extends ServiceProvider
      */
     private function registerPublishes()
     {
-        $this->publishes([__DIR__.'/../../config/newsletters.php' => config_path('newsletters.php')], 'config');
+        $this->publishes([__DIR__ . '/../../config/epistolary.php' => config_path('epistolary.php')], 'config');
         $this->publishes([__DIR__.'/../../database/migrations/' => database_path('migrations')], 'migrations');
         $this->publishes([__DIR__.'/../../database/factories/' => database_path('factories')], 'factories');
         $this->publishes([__DIR__.'/../../database/seeds/' => database_path('seeds')], 'seeds');

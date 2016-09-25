@@ -1,4 +1,4 @@
-@extends('newsletters::layout')
+@extends('epistolary::layout')
 
 @section('content')
   <h1>{{ $campaign->name }}</h1>

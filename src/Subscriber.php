@@ -1,6 +1,6 @@
 <?php
 
-namespace Pilaster\Newsletters;
+namespace Pilaster\Epistolary;
 
 use Illuminate\Database\Eloquent\Model;
 
