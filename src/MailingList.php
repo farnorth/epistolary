@@ -113,12 +113,12 @@ class MailingList extends Model
 
         Mail::send('epistolary::emails.default', ['campaign' => $campaign], function (Message $message) use ($to, $campaign) {
             $message->to($to);
+            $message->subject($campaign->subject);
+            collect($campaign->attachments)->each(function ($attachment) use ($message, $campaign) {
+                $message->attach($campaign->attachmentPath($attachment));
+            });
             if ($this->from_email) {
                 $message->from($this->from_email, $this->from_name);
-            }
-            $message->subject($campaign->subject);
-            foreach ($campaign->attachments as $attachment) {
-                $message->attach($campaign->attachmentPath($attachment));
             }
         });
 

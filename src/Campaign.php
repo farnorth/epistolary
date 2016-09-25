@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $scheduled_for
  * @property boolean $is_sent
  * @property \Carbon\Carbon $sent_at
+ * @property \Illuminate\Database\Eloquent\Model $mailingList
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
@@ -83,6 +84,6 @@ class Campaign extends Model
 
     public function send()
     {
-        $this->mailingList->sendCampaign($this);
+        return $this->mailingList->sendCampaign($this);
     }
 }
