@@ -1,6 +1,6 @@
 @extends('epistolary::layout')
 
-@section('content')
+@section('newsletter-content')
   <h1>Create a new campaign</h1>
 
   <form action="{{ route('epistolary::campaigns.store') }}" method="POST">

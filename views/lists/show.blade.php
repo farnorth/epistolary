@@ -1,6 +1,6 @@
 @extends('epistolary::layout')
 
-@section('content')
+@section('newsletter-content')
   <h1>{{ $list->name }}</h1>
 
   <div class="row">

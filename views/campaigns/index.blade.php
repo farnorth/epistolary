@@ -1,6 +1,6 @@
 @extends('epistolary::layout')
 
-@section('content')
+@section('newsletter-content')
   <h1>Campaigns</h1>
 
   @if ($campaigns->count())

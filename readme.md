@@ -17,8 +17,6 @@ and then add this to `config/app.php`:
 Pilaster\Epistolary\Providers\EpistolaryServiceProvider::class,
 ```
 
-### Optional Additional Setup
-
 To publish all of the file groups (config/views/migrations/etc.) do:
 
 ```bash
@@ -39,6 +37,18 @@ After publishing the database file groups you can migrate and seed the database 
 php artisan migrate
 ```
 
+#### Dummy Data
+
 ```bash
 php artisan db:seed --class=NewsletterDatabaseSeeder
 ```
+
+### Integrating views into your app
+
+```
+php artisan vendor:publish --tag=views
+```
+
+Then in `resources/views/vendor/epistolary/layout.blade.php`, extend your own app's layout file.
+
+Make sure you have a `scripts` section, a `scripts` stack and a `styles` stack. Otherwise, adjust things to suit.

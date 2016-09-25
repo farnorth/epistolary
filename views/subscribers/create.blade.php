@@ -1,6 +1,6 @@
 @extends('epistolary::layout')
 
-@section('content')
+@section('newsletter-content')
   <h1>Add a new subscriber</h1>
 
   <form action="{{ route('epistolary::subscribers.store') }}" method="POST">
