@@ -25,7 +25,8 @@
     "autoload": {
         "psr-4": {
             "Pilaster\\Epistolary\\": "src/"
-        }
+        },
+        "files": ["src/helpers.php"]
     },
     "autoload-dev": {
         "psr-4": {

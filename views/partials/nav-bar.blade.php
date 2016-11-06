@@ -15,10 +15,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="{{ set_active('lists') }}"><a href="{{ route('epistolary::lists.index') }}">Lists</a></li>
-                <li class="{{ set_active('campaigns') }}"><a href="{{ route('epistolary::campaigns.index') }}">Campaigns</a></li>
-                <li class="{{ set_active('subscribers') }}"><a href="{{ route('epistolary::subscribers.index') }}">Subscribers</a></li>
-                {{--<li class="{{ set_active('templates') }}"><a href="{{ route('epistolary::templates.index') }}">Templates</a></li>--}}
+                <li class="{{ Pilaster\Epistolary\set_active('lists') }}"><a href="{{ route('epistolary::lists.index') }}">Lists</a></li>
+                <li class="{{ Pilaster\Epistolary\set_active('campaigns') }}"><a href="{{ route('epistolary::campaigns.index') }}">Campaigns</a></li>
+                <li class="{{ Pilaster\Epistolary\set_active('subscribers') }}"><a href="{{ route('epistolary::subscribers.index') }}">Subscribers</a></li>
+                {{--<li class="{{ Pilaster\Epistolary\set_active('templates') }}"><a href="{{ route('epistolary::templates.index') }}">Templates</a></li>--}}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
