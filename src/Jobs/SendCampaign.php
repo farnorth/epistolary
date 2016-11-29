@@ -43,6 +43,7 @@ class SendCampaign extends Job implements ShouldQueue
                     $message->subject($this->campaign->subject);
                     $this->setMessageSender($message);
                     $this->setMessageAttachments($message);
+                    $this->setMessageTags($message);
                 });
         }
 
@@ -88,5 +89,18 @@ class SendCampaign extends Job implements ShouldQueue
         collect($this->campaign->attachments)->each(function ($attachment) use ($message) {
             $message->attach($this->campaign->attachmentPath($attachment));
         });
+    }
+
+    /**
+     * Tag the message
+     * @param Message $message
+     */
+    private function setMessageTags(Message $message)
+    {
+        if (config('mail.driver') === 'mailgun') {
+            $headers = $message->getHeaders();
+            $headers->addTextHeader('X-Mailgun-Tag', $this->campaign->mailingList->slug);
+            $headers->addTextHeader('X-Mailgun-Tag', str_slug($this->campaign->name));
+        }
     }
 }
