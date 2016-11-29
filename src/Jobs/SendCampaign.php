@@ -39,7 +39,7 @@ class SendCampaign extends Job implements ShouldQueue
             // Send it!
             $mailer->send('epistolary::emails.default', ['campaign' => $this->campaign],
                 function (Message $message) use ($recipients) {
-                    $message->to($recipients);
+                    $message->bcc($recipients);
                     $message->subject($this->campaign->subject);
                     $this->setMessageSender($message);
                     $this->setMessageAttachments($message);
