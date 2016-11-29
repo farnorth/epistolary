@@ -26,17 +26,4 @@ class EventServiceProvider extends ServiceProvider
     protected $subscribe = [
         'Pilaster\Epistolary\Listeners\CampaignEventListener',
     ];
-
-    /**
-     * Register any other events for your application.
-     *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
-     * @return void
-     */
-    public function boot(DispatcherContract $events)
-    {
-        parent::boot($events);
-
-        //
-    }
 }
