@@ -5,6 +5,7 @@ namespace Pilaster\Epistolary\Providers;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Pilaster\Epistolary\Services\NewsletterStats;
 
 class EpistolaryServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,8 @@ class EpistolaryServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/epistolary.php', 'epistolary');
         $this->app->register(EventServiceProvider::class);
+
+        $this->app->bind(NewsletterStats::class, config('epistolary.stats.provider'));
     }
 
     /**

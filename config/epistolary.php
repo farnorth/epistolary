@@ -7,4 +7,9 @@ return [
         'public' => public_path('emails/attachments'),
     ],
 
+    'stats' => [
+        'on' => false,
+        'provider' => \Pilaster\Epistolary\Services\MailgunStats::class,
+    ],
+
 ];
