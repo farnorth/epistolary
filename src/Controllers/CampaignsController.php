@@ -8,6 +8,7 @@ use Pilaster\Epistolary\Campaign;
 use Pilaster\Epistolary\Jobs\SendCampaign;
 use Pilaster\Epistolary\MailingList;
 use Pilaster\Epistolary\Requests\CampaignRequest;
+use Pilaster\Epistolary\Services\NewsletterStats;
 
 class CampaignsController extends Controller
 {
@@ -34,7 +35,17 @@ class CampaignsController extends Controller
     {
         $campaign = Campaign::find($campaign_id);
 
-        return view('epistolary::campaigns.show', compact('campaign'));
+        if (config('epistolary.stats.on')) {
+            $stats = app(NewsletterStats::class);
+            $eventTotals = $stats->eventTotalsForTag(str_slug($campaign->name));
+            $opens = $eventTotals['opened'];
+            $clicks = $eventTotals['clicked'];
+        } else {
+            $opens = 0;
+            $clicks = 0;
+        }
+
+        return view('epistolary::campaigns.show', compact('campaign', 'opens', 'clicks'));
     }
 
     /**

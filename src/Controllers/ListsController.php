@@ -4,6 +4,7 @@ namespace Pilaster\Epistolary\Controllers;
 
 use Illuminate\Http\Request;
 use Pilaster\Epistolary\MailingList;
+use Pilaster\Epistolary\Services\NewsletterStats;
 
 class ListsController extends Controller
 {
@@ -30,7 +31,17 @@ class ListsController extends Controller
         $list = $this->getList($list_id);
         $list->load('campaigns');
 
-        return view('epistolary::lists.show', compact('list'));
+        if (config('epistolary.stats.on')) {
+            $stats = app(NewsletterStats::class);
+            $eventTotals = $stats->eventTotalsForTag($list->slug);
+            $opens = $eventTotals['opened'];
+            $clicks = $eventTotals['clicked'];
+        } else {
+            $opens = 0;
+            $clicks = 0;
+        }
+
+        return view('epistolary::lists.show', compact('list', 'opens', 'clicks'));
     }
 
     /**
