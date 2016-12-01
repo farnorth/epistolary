@@ -34,16 +34,21 @@ class MailgunStats implements NewsletterStats
     {
         $events = (array) $events;
 
-        $result = $this->mailgun->get("{$this->domain}/tags/{$tag}/stats", [
-            'event' => $events,
-            'resolution' => 'month',
-            'limit' => 300,
-        ]);
+        try {
+            $result = $this->mailgun->get("{$this->domain}/tags/{$tag}/stats", [
+                'event' => $events,
+                'resolution' => 'month',
+                'limit' => 300,
+            ]);
+            $stats = $result->http_response_body->stats;
+        } catch (\Exception $e) {
+            $stats = array_fill(0, count($events), (object) array_fill_keys($events, (object) ['total' => 0]));
+        }
 
         $totals = [];
 
         foreach ($events as $event) {
-            $totals[$event] = array_reduce($result->http_response_body->stats, function ($total, $stats) use ($event) {
+            $totals[$event] = array_reduce($stats, function ($total, $stats) use ($event) {
                 return $total + $stats->{$event}->total;
             }, 0);
         }
