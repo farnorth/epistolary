@@ -19,9 +19,9 @@ class MailgunStats implements NewsletterStats
     /**
      * @param Mailgun $mailgun
      */
-    function __construct(Mailgun $mailgun)
+    function __construct(Mailgun $mailgun = null)
     {
-        $this->mailgun = $mailgun;
+        $this->mailgun = $mailgun ?: new Mailgun(config('services.mailgun.secret'));
         $this->domain = config('services.mailgun.domain');
     }
 
