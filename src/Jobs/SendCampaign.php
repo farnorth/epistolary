@@ -37,7 +37,7 @@ class SendCampaign extends Job implements ShouldQueue
 
         if (count($recipients) > 0) {
             foreach ($recipients as $recipient) {
-                $mailer->queue('epistolary::emails.default', [
+                $mailer->send('epistolary::emails.default', [
                     'campaign' => $this->campaign,
                     'recipient' => $recipient,
                 ], function (Message $message) use ($recipient) {
