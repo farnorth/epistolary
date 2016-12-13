@@ -36,12 +36,12 @@ class SendCampaign extends Job implements ShouldQueue
         $recipients = $this->getMessageRecipients();
 
         if (count($recipients) > 0) {
-            foreach ($recipients as $recipient) {
+            foreach ($recipients as $email => $recipient) {
                 $mailer->send('epistolary::emails.default', [
                     'campaign' => $this->campaign,
                     'recipient' => $recipient,
                 ], function (Message $message) use ($recipient) {
-                    $message->to($recipient);
+                    $message->to($email, $recipient);
                     $message->subject($this->campaign->subject);
                     $this->setMessageSender($message);
                     $this->setMessageAttachments($message);
