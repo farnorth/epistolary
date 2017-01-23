@@ -49,8 +49,8 @@ class AttachmentsController extends Controller
         $count = 1;
         while (!$good) {
             if (file_exists(sprintf('%s/%s', $path, $name))) {
-                $name = sprintf('%s--%s--%s.%s', $prefix, $suffix, $name_extension, $count);
                 $count++;
+                $name = sprintf('%s--%s--%s.%s', $prefix, $suffix, $count, $name_extension);
             } else {
                 $good = true;
             }
