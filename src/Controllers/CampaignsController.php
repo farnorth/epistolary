@@ -170,7 +170,10 @@ class CampaignsController extends Controller
             'description' => $request->input('description'),
             'is_scheduled' => (bool) $request->input('is_scheduled', false),
             'scheduled_for' => $request->input('scheduled_for') ? new Carbon($request->input('scheduled_for')) : null,
-            'attachments' => $request->input('attached_files'),
+            'attachments' => array_merge(
+                $request->input('attachments', []),
+                $request->input('attached_files', [])
+            ),
         ];
     }
 

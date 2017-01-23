@@ -51,8 +51,6 @@ class SendCampaign extends Job implements ShouldQueue
             }
         }
 
-        $this->campaign->markAsSent();
-
         event(new CampaignSent($this->campaign));
     }
 

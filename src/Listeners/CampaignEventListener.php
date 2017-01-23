@@ -11,7 +11,8 @@ class CampaignEventListener
      */
     public function onCampaignSent($event)
     {
-        // TODO: stuff to do when campaign was sent
+        $campaign = $event->campaign;
+        $campaign->markAsSent();
     }
 
     /**
