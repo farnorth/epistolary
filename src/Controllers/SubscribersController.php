@@ -63,7 +63,8 @@ class SubscribersController extends Controller
     {
         $subscriber = Subscriber::find($subscriber_id);
         $subscriber->update($this->subscriberAttributesFrom($request));
-        $this->makeSubscriptionsFromRequest($request, $subscriber_id);
+        //$this->makeSubscriptionsFromRequest($request, $subscriber_id);
+        $this->syncSubscriptionsFromRequest($request, $subscriber_id);
 
         session()->flash('success', sprintf('Updated subscriber %s', $subscriber->email));
 
@@ -141,6 +142,32 @@ class SubscribersController extends Controller
     private function makeSubscriptionsFromRequest(Request $request, $subscriber_id)
     {
         return collect($request->input('list_id', []))->map(function ($list_id) use ($subscriber_id) {
+            return Subscription::updateOrCreate([
+                'list_id' => $list_id,
+                'subscriber_id' => $subscriber_id,
+            ], [
+                'list_id' => $list_id,
+                'subscriber_id' => $subscriber_id,
+                'opted_in' => true,
+                'opted_in_at' => Carbon::now()
+            ]);
+        });
+    }
+
+    private function syncSubscriptionsFromRequest(Request $request, $subscriber_id)
+    {
+        // Collect the list id's submitted
+        $coll_submitted = collect( $request->input('list_id', []) );
+
+        // Now collect the list id's already associated with this subscriber
+        $coll_existing = Subscription::where('subscriber_id',$subscriber_id)->pluck('id')->all();
+
+        // These lists get removed
+        $detach = $coll_existing->diff($coll_submitted);
+        Subscription::destroy($detach);
+
+        // These lists we keep
+        return $coll_submitted->map(function ($list_id) use ($subscriber_id) {
             return Subscription::updateOrCreate([
                 'list_id' => $list_id,
                 'subscriber_id' => $subscriber_id,

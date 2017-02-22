@@ -1,1 +1,8 @@
 /vendor/
+/.idea/vcs.xml
+/.idea/php.xml
+/.idea/modules.xml
+/.idea/misc.xml
+/.idea/epistolary.iml
+/.idea/blade.xml
+.idea
