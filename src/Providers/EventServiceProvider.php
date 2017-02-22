@@ -25,5 +25,6 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $subscribe = [
         'Pilaster\Epistolary\Listeners\CampaignEventListener',
+        'Pilaster\Epistolary\Listeners\ListEventListener',
     ];
 }

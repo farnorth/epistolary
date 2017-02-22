@@ -97,6 +97,8 @@ class ListsController extends Controller
         $list = new MailingList($this->listAttributesFrom($request));
         $list->save();
 
+        $this->dispatch(new AddListToESP($list));
+
         session()->flash('success', sprintf('Created list %s', $list->name));
 
         return redirect()->route('epistolary::lists.index');

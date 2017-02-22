@@ -10,8 +10,10 @@
     ],
     "require": {
         "php": ">=5.5.9",
+        "php-http/guzzle6-adapter": "^1.1",
         "ramsey/uuid": "^3.5",
-        "guzzlehttp/guzzle": "~5.3|~6.0"
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "bogardo/mailgun": "^5.0"
     },
     "require-dev": {
         "laravel/framework": "5.2.*|5.3.*",
