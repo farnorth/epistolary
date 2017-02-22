@@ -157,17 +157,19 @@ class SubscribersController extends Controller
     private function syncSubscriptionsFromRequest(Request $request, $subscriber_id)
     {
         // Collect the list id's submitted
-        $coll_submitted = collect( $request->input('list_id', []) );
+        $submitted = $request->input('list_id');
 
         // Now collect the list id's already associated with this subscriber
-        $coll_existing = Subscription::where('subscriber_id',$subscriber_id)->pluck('id')->all();
+        $existing = Subscription::where('subscriber_id',$subscriber_id)
+            ->pluck('list_id')
+            ->toArray();
 
         // These lists get removed
-        $detach = $coll_existing->diff($coll_submitted);
-        Subscription::destroy($detach);
+        $detach = array_diff($existing,$submitted);
+        Subscription::whereIn('list_id',$detach)->delete();
 
         // These lists we keep
-        return $coll_submitted->map(function ($list_id) use ($subscriber_id) {
+        return collect( $request->input('list_id', []) )->map(function ($list_id) use ($subscriber_id) {
             return Subscription::updateOrCreate([
                 'list_id' => $list_id,
                 'subscriber_id' => $subscriber_id,
